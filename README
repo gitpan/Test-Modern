@@ -11,8 +11,8 @@ SYNOPSIS
 
 DESCRIPTION
     Test::Modern provides the best features of Test::More, Test::Fatal,
-    Test::Warnings, Test::API, and Test::LongString, as well as ideas from
-    Test::Requires, Test::DescribeMe, and Test::Moose.
+    Test::Warnings, Test::API, Test::LongString, and Test::Deep, as well as
+    ideas from Test::Requires, Test::DescribeMe, and Test::Moose.
 
     Test::Modern also automatically imposes strict and warnings on your
     script.
@@ -116,6 +116,66 @@ DESCRIPTION
 
     *   `lacks_string($haystack, $needle, $description)`
 
+  Features from Test::Deep
+    Test::Modern exports the following subs from Test::Deep:
+
+    *   `cmp_deeply($got, $expected, $description)`
+
+    The following are not exported by default, but can be exported upon
+    request:
+
+    *   `ignore()`
+
+    *   `methods(%hash)`
+
+    *   `listmethods(%hash)`
+
+    *   `shallow($thing)`
+
+    *   `noclass($thing)`
+
+    *   `useclass($thing)`
+
+    *   `re($regexp, $capture_data, $flags)`
+
+    *   `superhashof(\%hash)`
+
+    *   `subhashof(\%hash)`
+
+    *   `bag(@elements)`
+
+    *   `set(@elements)`
+
+    *   `superbagof(@elements)`
+
+    *   `subbagof(@elements)`
+
+    *   `supersetof(@elements)`
+
+    *   `subsetof(@elements)`
+
+    *   `all(@expecteds)`
+
+    *   `any(@expecteds)`
+
+    *   `obj_isa($class)`
+
+    *   `array_each($thing)`
+
+    *   `str($string)`
+
+    *   `num($number, $tolerance)`
+
+    *   `bool($value)`
+
+    *   `code(\&subref)`
+
+    As an alternative to using those functions, Test::Modern exports a
+    constant TD upon which you can call them as methods:
+
+       # like Test::Deep::bag(@elements)
+       TD->bag(@elements)
+
   Features inspired by Test::Moose
     *   `does_ok($object|$subclass, $class, $name)`
 
@@ -171,14 +231,22 @@ EXPORT
     `-strings`
         Exports the "Features from Test::LongString".
 
+    `-deep`
+        Exports cmp_deeply and TD.
+
+    `-deeper`
+        Exports *all* the "Features from Test::Deep".
+
     `-moose`
         Exports the "Features inspired by Test::Moose".
 
     `-default`
-        Exports the default features -- all of the above except `-deprecated`.
+        Exports the default features -- all of the above except `-deprecated`
+        and `-deeper`.
 
     `-all`
-        Exports all of the above features including `-deprecated`.
+        Exports all of the above features *including* `-deprecated` and
+        `-deeper`.
 
     `-author`, `-extended`, `-interactive`, and `-release`
         Classify the test script.
@@ -194,7 +262,7 @@ BUGS
 
 SEE ALSO
     Test::More, Test::Fatal, Test::Warnings, Test::API, Test::LongString,
-    Test::Moose, Test::Requires, Test::DescribeMe.
+    Test::Deep, Test::Moose, Test::Requires, Test::DescribeMe.
 
     Test::Most is a similar idea, but provides a slightly different
     combination of features.

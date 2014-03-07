@@ -19,3 +19,4 @@ t/03extended.t
 t/04requires.t
 t/05warnings.t
 t/06class-api-ok.t
+t/07deep.t

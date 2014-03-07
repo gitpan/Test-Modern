@@ -11,6 +11,7 @@ Files: README
  t/04requires.t
  t/05warnings.t
  t/06class-api-ok.t
+ t/07deep.t
 Copyright: This software is copyright (c) 2014 by Toby Inkster.
 License: GPL-1.0+ or Artistic-1.0
 

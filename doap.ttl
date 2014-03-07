@@ -22,15 +22,15 @@
 		doap-deps:on "Module::Runtime 0.012"^^doap-deps:CpanId;
 	], [ doap-deps:on "Test::More 0.96"^^doap-deps:CpanId ], [ doap-deps:on "Test::Fatal 0.007"^^doap-deps:CpanId ], [ doap-deps:on "Test::API 0.003"^^doap-deps:CpanId ], [
 		doap-deps:on "Test::LongString 0.15"^^doap-deps:CpanId;
-	], [
+	], [ doap-deps:on "Test::Deep 0.111"^^doap-deps:CpanId ], [
 		doap-deps:on "Test::Warnings 0.009"^^doap-deps:CpanId;
 	], [ doap-deps:on "Try::Tiny 0.15"^^doap-deps:CpanId ];
 	doap-deps:test-conflict [
+		doap-deps:on "Local::This::Probably::Does::Not::Exist"^^doap-deps:CpanId;
+	], [
 		doap-deps:on "Local::I::Doubt::This::Exists::Either"^^doap-deps:CpanId;
 	], [
 		doap-deps:on "Moose::This::Should::Not::Be::A::Real::Package"^^doap-deps:CpanId;
-	], [
-		doap-deps:on "Local::This::Probably::Does::Not::Exist"^^doap-deps:CpanId;
 	];
 	doap:bug-database    <http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern>;
 	doap:created         "2014-03-07"^^xsd:date;
@@ -41,7 +41,7 @@
 	doap:maintainer      <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:name            "Test-Modern";
 	doap:programming-language "Perl";
-	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>;
+	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>;
 	doap:repository      [
 		a doap:GitRepository;
 		doap:browse <https://github.com/tobyink/p5-test-modern>;
@@ -71,6 +71,21 @@
 	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.000_02.tar.gz>;
 	doap:revision        "0.000_02"^^xsd:string.
+
+<http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>
+	a                    cpan-uri:DeveloperRelease, doap:Version;
+	rdfs:label           "Preview";
+	dc:identifier        "Test-Modern-0.000_03"^^xsd:string;
+	dc:issued            "2014-03-07"^^xsd:date;
+	doap-changeset:changeset [
+		doap-changeset:item [
+			a doap-changeset:Addition;
+			rdfs:label "Also export functions from Test::Deep.";
+		];
+	];
+	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
+	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.000_03.tar.gz>;
+	doap:revision        "0.000_03"^^xsd:string.
 
 <http://purl.org/NET/cpan-uri/person/tobyink>
 	a                    foaf:Person;
