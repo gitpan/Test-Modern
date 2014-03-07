@@ -26,14 +26,15 @@ my $meta = {
                         develop   => { recommends => { "Dist::Inkt" => 0.001 } },
                         runtime   => {
                                        requires => {
-                                         "Exporter::Tiny"  => "0.030",
-                                         "Import::Into"    => "1.002000",
-                                         "Module::Runtime" => 0.012,
-                                         "Test::API"       => 0.003,
-                                         "Test::Fatal"     => 0.007,
-                                         "Test::More"      => 0.96,
-                                         "Test::Warnings"  => 0.009,
-                                         "Try::Tiny"       => 0.15,
+                                         "Exporter::Tiny"   => "0.030",
+                                         "Import::Into"     => "1.002000",
+                                         "Module::Runtime"  => 0.012,
+                                         "Test::API"        => 0.003,
+                                         "Test::Fatal"      => 0.007,
+                                         "Test::LongString" => 0.15,
+                                         "Test::More"       => 0.96,
+                                         "Test::Warnings"   => 0.009,
+                                         "Try::Tiny"        => 0.15,
                                        },
                                      },
                         test      => {
@@ -45,7 +46,7 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.000_01" },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.000_02" },
                       },
   "release_status" => "testing",
   "resources"      => {
@@ -55,7 +56,7 @@ my $meta = {
                         repository   => { type => "git", web => "https://github.com/tobyink/p5-test-modern" },
                         X_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => "0.000_01",
+  "version"        => "0.000_02",
 };
 
 my %dynamic_config;

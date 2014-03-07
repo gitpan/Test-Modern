@@ -43,6 +43,7 @@
             "Module::Runtime" : "0.012",
             "Test::API" : "0.003",
             "Test::Fatal" : "0.007",
+            "Test::LongString" : "0.15",
             "Test::More" : "0.96",
             "Test::Warnings" : "0.009",
             "Try::Tiny" : "0.15"
@@ -59,7 +60,7 @@
    "provides" : {
       "Test::Modern" : {
          "file" : "lib/Test/Modern.pm",
-         "version" : "0.000_01"
+         "version" : "0.000_02"
       }
    },
    "release_status" : "testing",
@@ -77,5 +78,5 @@
          "web" : "https://github.com/tobyink/p5-test-modern"
       }
    },
-   "version" : "0.000_01"
+   "version" : "0.000_02"
 }
