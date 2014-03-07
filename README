@@ -1,0 +1,201 @@
+NAME
+    Test::Modern - commonly used test functions and features for modern Perl
+    code
+
+SYNOPSIS
+       use Test::Modern;
+   
+       # Your tests here
+   
+       done_testing;
+
+DESCRIPTION
+    Test::Modern provides the best features of Test::More, Test::Fatal,
+    Test::Warnings, and Test::API, as well as ideas from Test::Requires,
+    Test::DescribeMe, and Test::Moose.
+
+    Test::Modern also automatically imposes strict and warnings on your
+    script.
+
+  Features from Test::More
+    Test::Modern exports the following subs from Test::More:
+
+    *   `ok($truth, $description)`
+
+    *   `is($got, $expected, $description)`
+
+    *   `isnt($got, $unexpected, $description)`
+
+    *   `like($got, $regexp, $description)`
+
+    *   `unlike($got, $regexp, $description)`
+
+    *   `is_deeply($got, $expected, $description)`
+
+    *   `cmp_ok($got, $operator, $expected, $description)`
+
+    *   `new_ok($class, \@args, $name)`
+
+    *   `isa_ok($object|$subclass, $class, $name)`
+
+    *   `can_ok($object|$class, @methods)`
+
+    *   `pass($description)`
+
+    *   `fail($description)`
+
+    *   `subtest($description, sub { ... })`
+
+    *   `diag(@messages)`
+
+    *   `note(@messages)`
+
+    *   `explain(@messages)`
+
+    *   `skip($why, $count) if $reason`
+
+    *   `todo_skip($why, $count) if $reason`
+
+    *   $TODO
+
+    *   `plan(%plan)`
+
+    *   `done_testing`
+
+    *   `BAIL_OUT($reason)`
+
+    The `use_ok`, `require_ok`, `eq_array`, `eq_hash`, and `eq_set` functions
+    are also available, but not exported by default. For `use_ok` and
+    `require_ok` it's normally better to use the Perl built-ins `use` and
+    `require` which will die (failing your test) if things are not OK. For the
+    `eq_*` functions, they can usually be replaced by `is_deeply`.
+
+  Features from Test::Fatal
+    Test::Modern exports the following subs from Test::Fatal:
+
+    *   `exception { BLOCK }`
+
+  Features from Test::Warnings
+    Test::Modern exports the following subs from Test::Warnings:
+
+    *   `warning { BLOCK }`
+
+    *   `warnings { BLOCK }`
+
+    In addition, Test::Modern always enables the `had_no_warnings` test at the
+    end of the file, ensuring that your test script generated no warnings
+    other than the expected ones which were caught by `warnings` blocks.
+
+  Features from Test::API
+    Test::Modern exports the following subs from Test::API:
+
+    *   `public_ok($package, @functions)`
+
+    *   `import_ok($package, @functions)`
+
+    Test::Modern also provides another test modelled after `public_ok`:
+
+    *   `class_api_ok($class, @methods)`
+
+        Like `public_ok`, but allows missing functions to be inherited from
+        parent classes. Extra methods in parent classes will not cause the
+        test to fail.
+
+  Features inspired by Test::Moose
+    *   `does_ok($object|$subclass, $class, $name)`
+
+        Like `isa_ok`, but calls `$obj->DOES` instead of `$obj->isa`.
+
+  Features inspired by Test::Requires
+    *   `use Test::Modern -requires => \%requirements`
+
+        This will skip the entire test script if the requirements are not met.
+        For example:
+
+           use Test::Modern -requires => {
+              'Moose'                => '2.11',
+              'namespace::autoclean' => undef,
+           };
+
+  Features inspired by Test::DescribeMe
+    These export tags allow you to classify tests as "author tests", "release
+    tests", "extended tests", or "interactive tests".
+
+    They will cause your test script to be skipped depending on various
+    environment variables.
+
+    *   `use Test::Modern -author`
+
+    *   `use Test::Modern -release`
+
+    *   `use Test::Modern -extended`
+
+    *   `use Test::Modern -interactive`
+
+EXPORT
+    This module uses Exporter::Tiny to perform its exports. This allows
+    exported subs to be renamed, etc.
+
+    The following export tags are supported:
+
+    `-more`
+        Exports the "Features from Test::More", except deprecated ones.
+
+    `-deprecated`
+        Exports the deprecated Test::More features.
+
+    `-fatal`
+        Exports the "Features from Test::Fatal".
+
+    `-warnings`
+        Exports the "Features from Test::Warnings".
+
+    `-api`
+        Exports the "Features from Test::API", including `class_api_ok`.
+
+    `-moose`
+        Exports the "Features inspired by Test::Moose".
+
+    `-default`
+        Exports the default features -- all of the above except `-deprecated`.
+
+    `-all`
+        Exports all of the above features including `-deprecated`.
+
+    `-author`, `-extended`, `-interactive`, and `-release`
+        Classify the test script.
+
+    `-requires`
+        Specify test requirements.
+
+    $TODO is currently *always* exported.
+
+BUGS
+    Please report any bugs to
+    <http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern>.
+
+SEE ALSO
+    Test::More, Test::Fatal, Test::Warnings, Test::API, Test::Moose,
+    Test::Requires, Test::DescribeMe.
+
+    Test::Most is a similar idea, but provides a slightly different
+    combination of features.
+
+    My Favourite Test::* Modules
+    <http://blogs.perl.org/users/toby_inkster/2014/02/my-favourite-test-module
+    s.html>.
+
+AUTHOR
+    Toby Inkster <tobyink@cpan.org>.
+
+COPYRIGHT AND LICENCE
+    This software is copyright (c) 2014 by Toby Inkster.
+
+    This is free software; you can redistribute it and/or modify it under the
+    same terms as the Perl 5 programming language system itself.
+
+DISCLAIMER OF WARRANTIES
+    THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+    WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+    MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+

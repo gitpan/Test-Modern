@@ -1,0 +1,43 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.70.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 294505f858f11dd062e9916e3f50d88210a9ef54 CONTRIBUTING
+SHA1 b350c8f1293f6326d00693db43eb889ab57a535a COPYRIGHT
+SHA1 6bd7b17d81be63d08d4efa6cb80106e72887842c CREDITS
+SHA1 6e308b3e989e532cfab58afd0f386df854753b48 Changes
+SHA1 d4299865e550b45b34d84ecb54890b954fb2b17f INSTALL
+SHA1 47870123f373f5185d6893cb98bf06a8a05510aa LICENSE
+SHA1 00b569e277cf74f1ad08455c4f08e13907ec3c9a MANIFEST
+SHA1 c82b2a0bbaa72c90ed753569852613e1256ad88d META.json
+SHA1 15ef83d9779437e03aa76754d0659afe03a336cc META.yml
+SHA1 dda5075ed0d72b3105b543b72e6bea81f64b5619 Makefile.PL
+SHA1 cadf1cd66f23b92cef96eb16e458e55d4dc08edc README
+SHA1 ad423a5a6844ebd93aab03b47f4f178a559128ac dist.ini
+SHA1 264baeee5b022f2673d1d9dc4c61f91fe018171c doap.ttl
+SHA1 e2c3591ff8818193b26a7b8971e16022ebb61f6c lib/Test/Modern.pm
+SHA1 70835456d741a13339c0cc7b9ab79fa5083308ac t/01basic.t
+SHA1 144e91d24dc3bf9de4a9924ee7401e062c11342c t/02exporting.t
+SHA1 69065d7899ae0fa85b44f539abefb20bc3d3721c t/03extended.t
+SHA1 ad1613a9399c8b6dd2ef8f38e070d38fed07ab15 t/04requires.t
+SHA1 c522863a10c9299821c169e7afd9a948c228ba6e t/05warnings.t
+SHA1 cc7771ca38ac16715c7c414cfeed10dd33084edf t/06class-api-ok.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
+
+iEYEARECAAYFAlMZ2dQACgkQzr+BKGoqfTn5agCgsDQa2nVgp/QutDllHknO2/TS
+VpQAn2JjnbEVPFflWN+HFW1QjJz00r/x
+=LcRT
+-----END PGP SIGNATURE-----
