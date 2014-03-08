@@ -47,7 +47,7 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.000_03" },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.000_04" },
                       },
   "release_status" => "testing",
   "resources"      => {
@@ -57,7 +57,7 @@ my $meta = {
                         repository   => { type => "git", web => "https://github.com/tobyink/p5-test-modern" },
                         X_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => "0.000_03",
+  "version"        => "0.000_04",
 };
 
 my %dynamic_config;

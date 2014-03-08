@@ -5,7 +5,7 @@ use warnings;
 package Test::Modern;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.000_03';
+our $VERSION   = '0.000_04';
 
 use Exporter::Tiny   0.030 qw();
 use Import::Into     1.002 qw();
@@ -259,6 +259,7 @@ sub Test::Modern::_TD::AUTOLOAD
 {
 	shift;
 	my ($method) = ($Test::Modern::_TD::AUTOLOAD =~ /(\w+)\z/);
+	return if $method eq 'DESTROY';
 	my $coderef = 'Test::Deep'->can($method)
 		or die("Test::Deep::$method not found");
 	$coderef->(@_);
@@ -611,7 +612,7 @@ C<< code(\&subref) >>
 =back
 
 As an alternative to using those functions, Test::Modern exports a constant
-L<TD> upon which you can call them as methods:
+C<TD> upon which you can call them as methods:
 
    # like Test::Deep::bag(@elements)
    TD->bag(@elements)
