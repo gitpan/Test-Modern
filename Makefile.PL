@@ -29,6 +29,7 @@ my $meta = {
                                          "Exporter::Tiny"   => "0.030",
                                          "Import::Into"     => "1.002000",
                                          "Module::Runtime"  => 0.012,
+                                         "perl"             => 5.006002,
                                          "Test::API"        => 0.003,
                                          "Test::Deep"       => 0.111,
                                          "Test::Fatal"      => 0.007,
@@ -47,7 +48,7 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.000_05" },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.000_06" },
                       },
   "release_status" => "testing",
   "resources"      => {
@@ -57,7 +58,7 @@ my $meta = {
                         repository   => { type => "git", web => "https://github.com/tobyink/p5-test-modern" },
                         X_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => "0.000_05",
+  "version"        => "0.000_06",
 };
 
 my %dynamic_config;

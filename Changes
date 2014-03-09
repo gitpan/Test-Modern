@@ -6,6 +6,11 @@ Home page:    <https://metacpan.org/release/Test-Modern>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern>
 Maintainer:   Toby Inkster (TOBYINK) <tobyink@cpan.org>
 
+0.000_06	2014-03-09	Preview
+
+ [ Test Suite ]
+ - Help Perl 5.8 pass the t/08object-ok.t test case.
+
 0.000_05	2014-03-09	Preview
 
  - Added: Added an object_ok test function.

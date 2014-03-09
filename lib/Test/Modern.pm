@@ -1,11 +1,11 @@
-use 5.008;
+use 5.006002;
 use strict;
 use warnings;
 
 package Test::Modern;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.000_05';
+our $VERSION   = '0.000_06';
 
 use Exporter::Tiny   0.030 qw();
 use Import::Into     1.002 qw();
