@@ -207,6 +207,26 @@ DESCRIPTION
 
     *   `use Test::Modern -interactive`
 
+  Brand Spanking New Features
+    *   `object_ok($object, $name, %tests)`
+
+        Runs a gamut of subtests on an object:
+
+           object_ok(
+              $object,
+              $name,
+              isa   => \@classes,
+              does  => \@roles,
+              can   => \@methods,
+              api   => \@methods,
+           );
+
+        $object may be a blessed object, or an unblessed coderef which returns
+        a blessed object. The `isa` test runs `isa_ok`; the `does` test runs
+        `does_ok`, the `can` test runs `can_ok`, and the `api` test runs
+        `class_api_ok`. Any of the test hash keys may be omitted, in which
+        case that test will not be run. $name may be omitted.
+
 EXPORT
     This module uses Exporter::Tiny to perform its exports. This allows
     exported subs to be renamed, etc.
@@ -242,11 +262,11 @@ EXPORT
 
     `-default`
         Exports the default features -- all of the above except `-deprecated`
-        and `-deeper`.
+        and `-deeper`. Also exports `object_ok`.
 
     `-all`
-        Exports all of the above features *including* `-deprecated` and
-        `-deeper`.
+        Exports all of the above features *including* `-deprecated`,
+        `-deeper`, and `object_ok`.
 
     `-author`, `-extended`, `-interactive`, and `-release`
         Classify the test script.

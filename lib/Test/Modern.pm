@@ -5,7 +5,7 @@ use warnings;
 package Test::Modern;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.000_04';
+our $VERSION   = '0.000_05';
 
 use Exporter::Tiny   0.030 qw();
 use Import::Into     1.002 qw();
@@ -94,8 +94,16 @@ our %EXPORT_TAGS = (
 	deprecated => [qw( use_ok require_ok eq_array eq_hash eq_set )],
 	%HINTS,
 );
-our @EXPORT_OK = map(@$_, grep { ref($_) eq 'ARRAY' } values(%EXPORT_TAGS));
-our @EXPORT    = map(@{$EXPORT_TAGS{$_}}, qw(more fatal warnings api moose strings deep));
+
+our @EXPORT_OK = (
+	'object_ok',
+	map(@$_, grep { ref($_) eq 'ARRAY' } values(%EXPORT_TAGS)),
+);
+
+our @EXPORT = (
+	'object_ok',
+	map(@{$EXPORT_TAGS{$_}}, qw(more fatal warnings api moose strings deep)),
+);
 
 # Here we check to see if the import list consists
 # only of hints. If so, we add @EXPORT to the list.
@@ -249,6 +257,62 @@ WHOA
 	return $ok;
 }
 
+sub object_ok
+{
+	local $Test::Builder::Level = $Test::Builder::Level + 1;
+	
+	my $object = shift;
+	my $name   = (@_%2) ? shift : '$object';
+	my %tests  = @_;
+	
+	subtest("$name ok", sub
+	{
+		if (ref($object) eq q(CODE))
+		{
+			try {
+				my $tmp = $object->();
+				die 'coderef did not return an object'
+					unless ref($tmp);
+				$object = $tmp;
+				pass("instantiate $name");
+			}
+			catch {
+				fail("instantiate $name");
+				diag("instantiating $name threw an exception: $_");
+			}
+		}
+		
+		ok(Scalar::Util::blessed($object), "$name is blessed")
+			or return;
+		
+		if (exists($tests{isa}))
+		{
+			my @classes = ref($tests{isa}) eq q(ARRAY) ? @{$tests{isa}} : $tests{isa};
+			isa_ok($object, $_, $name) for @classes;
+		}
+		
+		if (exists($tests{does}))
+		{
+			my @roles = ref($tests{does}) eq q(ARRAY) ? @{$tests{does}} : $tests{does};
+			does_ok($object, $_, $name) for @roles;
+		}
+		
+		if (exists($tests{can}))
+		{
+			my @methods = ref($tests{can}) eq q(ARRAY) ? @{$tests{can}} : $tests{can};
+			can_ok($object, @methods);
+		}
+		
+		if (exists($tests{api}))
+		{
+			my @methods = ref($tests{api}) eq q(ARRAY) ? @{$tests{api}} : $tests{api};
+			class_api_ok(ref($object), @methods);
+		}
+		
+		done_testing;
+	});
+}
+
 sub _generate_TD
 {
 	my $_td = bless(do { my $x = 1; \$x }, 'Test::Modern::_TD');
@@ -280,6 +344,8 @@ __END__
 =item C<does_ok>
 
 =item C<class_api_ok>
+
+=item C<object_ok>
 
 =end trustme
 
@@ -675,6 +741,34 @@ C<< use Test::Modern -interactive >>
 
 =back
 
+=head2 Brand Spanking New Features
+
+=over
+
+=item *
+
+C<< object_ok($object, $name, %tests) >>
+
+Runs a gamut of subtests on an object:
+
+   object_ok(
+      $object,
+      $name,
+      isa   => \@classes,
+      does  => \@roles,
+      can   => \@methods,
+      api   => \@methods,
+   );
+
+C<< $object >> may be a blessed object, or an unblessed coderef which
+returns a blessed object. The C<< isa >> test runs C<< isa_ok >>; the
+C<< does >> test runs C<< does_ok >>, the C<< can >> test runs
+C<< can_ok >>, and the C<< api >> test runs C<< class_api_ok >>. Any of
+the test hash keys may be omitted, in which case that test will not be
+run. C<< $name >> may be omitted.
+
+=back
+
 =head1 EXPORT
 
 This module uses L<Exporter::Tiny> to perform its exports. This allows
@@ -723,12 +817,12 @@ Exports the L</"Features inspired by Test::Moose">.
 =item C<< -default >>
 
 Exports the default features -- all of the above except C<< -deprecated >>
-and C<< -deeper >>.
+and C<< -deeper >>. Also exports C<object_ok>.
 
 =item C<< -all >>
 
-Exports all of the above features I<including> C<< -deprecated >> and
-C<< -deeper >>.
+Exports all of the above features I<including> C<< -deprecated >>,
+C<< -deeper >>, and C<object_ok>.
 
 =item C<< -author >>, C<< -extended >>, C<< -interactive >>, and C<< -release >>
 
