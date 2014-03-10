@@ -219,13 +219,40 @@ DESCRIPTION
               does  => \@roles,
               can   => \@methods,
               api   => \@methods,
+              more  => sub {
+                 my $object = shift;
+                 ...;
+              }
            );
 
         $object may be a blessed object, or an unblessed coderef which returns
         a blessed object. The `isa` test runs `isa_ok`; the `does` test runs
         `does_ok`, the `can` test runs `can_ok`, and the `api` test runs
-        `class_api_ok`. Any of the test hash keys may be omitted, in which
-        case that test will not be run. $name may be omitted.
+        `class_api_ok`.
+
+        `more` introduces a coderef for running more tests. Within this sub
+        you can use any of the standard Test::More, Test::LongString, etc
+        tests. It is automatically run in a `try` block (see Try::Tiny);
+        throwing an exception will cause the test to fail, but not cause the
+        script to end.
+
+        Any of the test hash keys may be omitted, in which case that test will
+        not be run. $name may be omitted.
+
+        Practical example:
+
+           object_ok(
+              sub { Employee->new(name => 'Robert Jones') },
+              '$bob',
+              isa   => [qw( Employee Person Moo::Object )],
+              does  => [qw( Employable )],
+              can   => [qw( name employee_number tax_code )],
+              more  => sub {
+                 my $object = shift;
+                 is($object->name, "Robert Jones");
+                 like($object->employee_number, qr/^[0-9]+$/);
+              },
+           );
 
 EXPORT
     This module uses Exporter::Tiny to perform its exports. This allows

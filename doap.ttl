@@ -41,7 +41,7 @@
 	doap:maintainer      <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:name            "Test-Modern";
 	doap:programming-language "Perl";
-	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_04>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_05>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_06>;
+	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_04>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_05>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_06>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_07>;
 	doap:repository      [
 		a doap:GitRepository;
 		doap:browse <https://github.com/tobyink/p5-test-modern>;
@@ -131,6 +131,24 @@
 	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.000_06.tar.gz>;
 	doap:revision        "0.000_06"^^xsd:string.
+
+<http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_07>
+	a                    cpan-uri:DeveloperRelease, doap:Version;
+	rdfs:label           "Preview";
+	dc:identifier        "Test-Modern-0.000_07"^^xsd:string;
+	dc:issued            "2014-03-10"^^xsd:date;
+	doap-changeset:changeset [
+		doap-changeset:item [
+			a doap-changeset:Addition;
+			rdfs:label "object_ok now has a `more` test.";
+		], [
+			a doap-changeset:Change;
+			rdfs:label "object_ok will now BAIL_OUT(!!) if you pass unknown hash keys in %tests.";
+		];
+	];
+	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
+	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.000_07.tar.gz>;
+	doap:revision        "0.000_07"^^xsd:string.
 
 <http://purl.org/NET/cpan-uri/person/tobyink>
 	a                    foaf:Person;
