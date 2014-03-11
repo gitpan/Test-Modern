@@ -21,49 +21,28 @@ DESCRIPTION
   Features from Test::More
     Test::Modern exports the following subs from Test::More:
 
-    *   `ok($truth, $description)`
-
-    *   `is($got, $expected, $description)`
-
-    *   `isnt($got, $unexpected, $description)`
-
-    *   `like($got, $regexp, $description)`
-
-    *   `unlike($got, $regexp, $description)`
-
-    *   `is_deeply($got, $expected, $description)`
-
-    *   `cmp_ok($got, $operator, $expected, $description)`
-
-    *   `new_ok($class, \@args, $name)`
-
-    *   `isa_ok($object|$subclass, $class, $name)`
-
-    *   `can_ok($object|$class, @methods)`
-
-    *   `pass($description)`
-
-    *   `fail($description)`
-
-    *   `subtest($description, sub { ... })`
-
-    *   `diag(@messages)`
-
-    *   `note(@messages)`
-
-    *   `explain(@messages)`
-
-    *   `skip($why, $count) if $reason`
-
-    *   `todo_skip($why, $count) if $reason`
-
-    *   $TODO
-
-    *   `plan(%plan)`
-
-    *   `done_testing`
-
-    *   `BAIL_OUT($reason)`
+    `ok($truth, $description)`
+    `is($got, $expected, $description)`
+    `isnt($got, $unexpected, $description)`
+    `like($got, $regexp, $description)`
+    `unlike($got, $regexp, $description)`
+    `is_deeply($got, $expected, $description)`
+    `cmp_ok($got, $operator, $expected, $description)`
+    `new_ok($class, \@args, $name)`
+    `isa_ok($object|$subclass, $class, $name)`
+    `can_ok($object|$class, @methods)`
+    `pass($description)`
+    `fail($description)`
+    `subtest($description, sub { ... })`
+    `diag(@messages)`
+    `note(@messages)`
+    `explain(@messages)`
+    `skip($why, $count) if $reason`
+    `todo_skip($why, $count) if $reason`
+    $TODO
+    `plan(%plan)`
+    `done_testing`
+    `BAIL_OUT($reason)`
 
     The `use_ok`, `require_ok`, `eq_array`, `eq_hash`, and `eq_set` functions
     are also available, but not exported by default. For `use_ok` and
@@ -74,14 +53,13 @@ DESCRIPTION
   Features from Test::Fatal
     Test::Modern exports the following subs from Test::Fatal:
 
-    *   `exception { BLOCK }`
+    `exception { BLOCK }`
 
   Features from Test::Warnings
     Test::Modern exports the following subs from Test::Warnings:
 
-    *   `warning { BLOCK }`
-
-    *   `warnings { BLOCK }`
+    `warning { BLOCK }`
+    `warnings { BLOCK }`
 
     In addition, Test::Modern always enables the `had_no_warnings` test at the
     end of the file, ensuring that your test script generated no warnings
@@ -90,14 +68,12 @@ DESCRIPTION
   Features from Test::API
     Test::Modern exports the following subs from Test::API:
 
-    *   `public_ok($package, @functions)`
-
-    *   `import_ok($package, @functions)`
+    `public_ok($package, @functions)`
+    `import_ok($package, @functions)`
 
     Test::Modern also provides another test modelled after `public_ok`:
 
-    *   `class_api_ok($class, @methods)`
-
+    `class_api_ok($class, @methods)`
         Like `public_ok`, but allows missing functions to be inherited from
         parent classes. Extra methods in parent classes will not cause the
         test to fail.
@@ -105,71 +81,44 @@ DESCRIPTION
   Features from Test::LongString
     Test::Modern exports the following subs from Test::LongString:
 
-    *   `is_string($got, $expected, $description)`
-
-    *   `is_string_nows($got, $expected, $description)`
-
-    *   `like_string($got, $regexp, $description)`
-
-    *   `unlike_string($got, $regexp, $description)`
-
-    *   `contains_string($haystack, $needle, $description)`
-
-    *   `lacks_string($haystack, $needle, $description)`
+    `is_string($got, $expected, $description)`
+    `is_string_nows($got, $expected, $description)`
+    `like_string($got, $regexp, $description)`
+    `unlike_string($got, $regexp, $description)`
+    `contains_string($haystack, $needle, $description)`
+    `lacks_string($haystack, $needle, $description)`
 
   Features from Test::Deep
     Test::Modern exports the following subs from Test::Deep:
 
-    *   `cmp_deeply($got, $expected, $description)`
+    `cmp_deeply($got, $expected, $description)`
 
     The following are not exported by default, but can be exported upon
     request:
 
-    *   `ignore()`
-
-    *   `methods(%hash)`
-
-    *   `listmethods(%hash)`
-
-    *   `shallow($thing)`
-
-    *   `noclass($thing)`
-
-    *   `useclass($thing)`
-
-    *   `re($regexp, $capture_data, $flags)`
-
-    *   `superhashof(\%hash)`
-
-    *   `subhashof(\%hash)`
-
-    *   `bag(@elements)`
-
-    *   `set(@elements)`
-
-    *   `superbagof(@elements)`
-
-    *   `subbagof(@elements)`
-
-    *   `supersetof(@elements)`
-
-    *   `subsetof(@elements)`
-
-    *   `all(@expecteds)`
-
-    *   `any(@expecteds)`
-
-    *   `obj_isa($class)`
-
-    *   `array_each($thing)`
-
-    *   `str($string)`
-
-    *   `num($number, $tolerance)`
-
-    *   `bool($value)`
-
-    *   `code(\&subref)`
+    `ignore()`
+    `methods(%hash)`
+    `listmethods(%hash)`
+    `shallow($thing)`
+    `noclass($thing)`
+    `useclass($thing)`
+    `re($regexp, $capture_data, $flags)`
+    `superhashof(\%hash)`
+    `subhashof(\%hash)`
+    `bag(@elements)`
+    `set(@elements)`
+    `superbagof(@elements)`
+    `subbagof(@elements)`
+    `supersetof(@elements)`
+    `subsetof(@elements)`
+    `all(@expecteds)`
+    `any(@expecteds)`
+    `obj_isa($class)`
+    `array_each($thing)`
+    `str($string)`
+    `num($number, $tolerance)`
+    `bool($value)`
+    `code(\&subref)`
 
     As an alternative to using those functions, Test::Modern exports a
     constant `TD` upon which you can call them as methods:
@@ -178,13 +127,17 @@ DESCRIPTION
        TD->bag(@elements)
 
   Features inspired by Test::Moose
-    *   `does_ok($object|$subclass, $class, $name)`
+    Test::Modern does not use Test::Moose, but does provide the following
+    function inspired by it:
 
+    `does_ok($object|$subclass, $class, $name)`
         Like `isa_ok`, but calls `$obj->DOES` instead of `$obj->isa`.
 
   Features inspired by Test::CleanNamespaces
-    *   `namespaces_clean(@namespaces)`
+    Test::Modern does not use Test::CleanNamespaces, but does provide the
+    following function inspired by it:
 
+    `namespaces_clean(@namespaces)`
         Tests that namespaces don't contain any imported functions. (i.e. you
         haven't forgotten to use namespace::autoclean or namespace::sweep in a
         class).
@@ -195,13 +148,15 @@ DESCRIPTION
         only count as one test.
 
   Features inspired by Test::Requires
-    *   `use Test::Modern -requires => \%requirements`
+    Test::Modern does not use Test::Requires, but does provide the following
+    feature inspired by it:
 
+    `use Test::Modern -requires => \%requirements`
         This will skip the entire test script if the requirements are not met.
         For example:
 
            use Test::Modern -requires => {
-                        'perl'                 => '5.010',
+              'perl'                 => '5.010',
               'Moose'                => '2.11',
               'namespace::autoclean' => undef,
            };
@@ -213,17 +168,16 @@ DESCRIPTION
     They will cause your test script to be skipped depending on various
     environment variables.
 
-    *   `use Test::Modern -author`
-
-    *   `use Test::Modern -release`
-
-    *   `use Test::Modern -extended`
-
-    *   `use Test::Modern -interactive`
+    `use Test::Modern -author`
+    `use Test::Modern -release`
+    `use Test::Modern -extended`
+    `use Test::Modern -interactive`
 
   Brand Spanking New Features
-    *   `object_ok($object, $name, %tests)`
+    Test::Modern provides a shortcut which combines several features it has
+    pilfered from other testing modules:
 
+    `object_ok($object, $name, %tests)`
         Runs a gamut of subtests on an object:
 
            object_ok(
@@ -233,7 +187,7 @@ DESCRIPTION
               does  => \@roles,
               can   => \@methods,
               api   => \@methods,
-                        clean => $boolean,
+              clean => $boolean,
               more  => sub {
                  my $object = shift;
                  ...;
@@ -266,7 +220,7 @@ DESCRIPTION
               isa   => [qw( Employee Person Moo::Object )],
               does  => [qw( Employable )],
               can   => [qw( name employee_number tax_code )],
-                        clean => 1,
+              clean => 1,
               more  => sub {
                  my $object = shift;
                  is($object->name, "Robert Jones");
@@ -338,7 +292,8 @@ BUGS
 
 SEE ALSO
     Test::More, Test::Fatal, Test::Warnings, Test::API, Test::LongString,
-    Test::Deep, Test::Moose, Test::Requires, Test::DescribeMe.
+    Test::Deep, Test::Moose, Test::CleanNamespaces, Test::Requires,
+    Test::DescribeMe.
 
     Test::Most is a similar idea, but provides a slightly different
     combination of features.
