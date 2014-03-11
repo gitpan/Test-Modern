@@ -13,6 +13,8 @@ Files: README
  t/06class-api-ok.t
  t/07deep.t
  t/08object-ok.t
+ t/09requires-perl.t
+ t/10-namespaces-clean.t
 Copyright: This software is copyright (c) 2014 by Toby Inkster.
 License: GPL-1.0+ or Artistic-1.0
 

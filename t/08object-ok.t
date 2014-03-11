@@ -37,18 +37,21 @@ BEGIN {
 *UNIVERSAL::DOES = \&UNIVERSAL::isa
 	unless exists(&UNIVERSAL::DOES);
 
-object_ok(
+my $return = object_ok(
 	sub { bless [], 'YYY' },
 	'$y',
 	isa   => 'YYY',
 	does  => [qw/ XXX YYY /],
 	can   => [qw/ xxx /],
 	api   => [qw/ xxx yyy /],
+	clean => 1,
 	more  => sub {
 		my $object = shift;
 		is($object->xxx, 1);
 		is($object->yyy, 2);
 	},
 );
+
+isa_ok($return, 'YYY', '$return');
 
 done_testing;

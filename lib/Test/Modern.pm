@@ -1,15 +1,16 @@
-use 5.006002;
+use 5.008001;
 use strict;
 use warnings;
 
 package Test::Modern;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.000_07';
+our $VERSION   = '0.000_08';
 
-use Exporter::Tiny   0.030 qw();
+use superclass 'Exporter::Tiny' => 0.030;
+
 use Import::Into     1.002 qw();
-use Module::Runtime  0.012 qw( require_module );
+use Module::Runtime  0.012 qw( require_module module_notional_filename );
 use Test::More       0.96;
 use Test::API        0.003;
 use Test::Fatal      0.007;
@@ -49,6 +50,16 @@ $HINTS{ requires } = sub
 	my %requires = %{ $_[2] };
 	for my $module (sort keys %requires)
 	{
+		if ($module eq 'perl')
+		{
+			next if !defined($requires{$module});
+			next if $] >= $requires{$module};
+			return plan skip_all => sprintf(
+				"Test requires Perl %s",
+				$requires{$module},
+			);
+		}
+		
 		try {
 			&require_module(
 				$module,
@@ -83,6 +94,7 @@ our %EXPORT_TAGS = (
 		is_string is_string_nows like_string unlike_string
 		contains_string lacks_string
 	)],
+	clean    => [qw( namespaces_clean )],
 	deep     => [qw( cmp_deeply TD )],
 	deeper   => [qw(
 		cmp_deeply TD
@@ -102,7 +114,7 @@ our @EXPORT_OK = (
 
 our @EXPORT = (
 	'object_ok',
-	map(@{$EXPORT_TAGS{$_}}, qw(more fatal warnings api moose strings deep)),
+	map(@{$EXPORT_TAGS{$_}}, qw(more fatal warnings api moose strings deep clean)),
 );
 
 # Here we check to see if the import list consists
@@ -265,7 +277,7 @@ sub object_ok
 	my $name   = (@_%2) ? shift : '$object';
 	my %tests  = @_;
 	
-	subtest("$name ok", sub
+	my $result = subtest("$name ok", sub
 	{
 		if (ref($object) eq q(CODE))
 		{
@@ -313,6 +325,11 @@ sub object_ok
 			delete $tests{api};
 		}
 		
+		if (delete($tests{clean}))
+		{
+			namespaces_clean(ref($object));
+		}
+		
 		if (exists($tests{more}))
 		{
 			my $more = delete $tests{more};
@@ -332,6 +349,9 @@ sub object_ok
 		my $huh = join q[, ], sort keys %tests;
 		BAIL_OUT("object_ok cannot understand: $huh");
 	}
+	
+	# return $object
+	$result ? $object : ();
 }
 
 sub _generate_TD
@@ -348,6 +368,101 @@ sub Test::Modern::_TD::AUTOLOAD
 	my $coderef = 'Test::Deep'->can($method)
 		or die("Test::Deep::$method not found");
 	$coderef->(@_);
+}
+
+# Stolen from Test::CleanNamespaces; eliminated Package::Stash and
+# Sub::Name dependencies; massively cleaned up; don't use Test::Builder
+# directly; instead just call Test::More's exported functions.
+#
+{
+	my $_dirt = sub
+	{
+		my $ns = shift;
+		require_module($ns);
+
+		my %symbols = do {
+			no strict qw(refs);
+			map   { /(\w+)$/ => $_; }
+			grep  { *$_{CODE}; }
+			values %{"$ns\::"};
+		};
+		
+		my $meta;
+		if ($INC{ module_notional_filename('Moose::Util') }
+			and $meta = Moose::Util::find_meta($ns))
+		{
+			my %subs = %symbols;
+			delete @subs{ $meta->get_method_list };
+			return keys %subs;
+		}
+		elsif ($INC{ module_notional_filename('Mouse::Util') }
+			and $meta = Mouse::Util::class_of($ns))
+		{
+			my %subs = %symbols;
+			delete @subs{ $meta->get_method_list };
+			return keys %subs;
+		}
+		else
+		{
+			require B;
+			no strict qw(refs);
+			return grep {
+				my $stash = B::svref_2object(\&{"$ns\::$_"})->GV->STASH->NAME;
+				$stash ne $ns
+					and $stash ne 'Role::Tiny'
+					and not eval { require Role::Tiny; Role::Tiny->is_role($stash) }
+			} keys %symbols;
+		}
+	};
+	
+	my $_diag_dirt = sub
+	{
+		require B;
+		
+		my $ns = shift;
+		my @imports = @_;
+		
+		my %imports;
+		@imports{@imports} = map {
+			B::svref_2object(\&{"$ns\::$_"})->GV->STASH->NAME . "::$_";
+		} @imports;
+		diag explain('remaining imports: ' => \%imports);
+	};
+
+	my $_test_or_skip = sub
+	{
+		my $ns = shift;
+		my $rv;
+		try {
+			my @imports = $ns->$_dirt;
+			$rv = ok(!@imports, "${ns} contains no imported functions")
+				or $ns->$_diag_dirt(@imports);
+		}
+		catch {
+			SKIP: {
+				skip "failed to load $ns: $_", 1;
+				fail("failed to load module");
+			};
+		};
+		return $rv;
+	};
+		
+	sub namespaces_clean
+	{
+		local $Test::Builder::Level = $Test::Builder::Level + 1;
+		
+		# special case a single namespace
+		return shift->$_test_or_skip if @_ == 1;
+		
+		my @namespaces = @_;
+		return subtest(
+			sprintf("namespaces_clean: %s", join q(, ), @namespaces),
+			sub {
+				$_->$_test_or_skip for @namespaces;
+				done_testing;
+			},
+		);
+	}
 }
 
 1;
@@ -368,6 +483,8 @@ __END__
 
 =item C<object_ok>
 
+=item C<namespaces_clean>
+
 =end trustme
 
 =head1 NAME
@@ -386,8 +503,8 @@ Test::Modern - commonly used test functions and features for modern Perl code
 
 Test::Modern provides the best features of L<Test::More>, L<Test::Fatal>,
 L<Test::Warnings>, L<Test::API>, L<Test::LongString>, and L<Test::Deep>,
-as well as ideas from L<Test::Requires>, L<Test::DescribeMe>, and
-L<Test::Moose>.
+as well as ideas from L<Test::Requires>, L<Test::DescribeMe>,
+L<Test::Moose>, and L<Test::CleanNamespaces>.
 
 Test::Modern also automatically imposes L<strict> and L<warnings> on your
 script.
@@ -716,6 +833,24 @@ Like C<isa_ok>, but calls C<< $obj->DOES >> instead of C<< $obj->isa >>.
 
 =back
 
+=head2 Features inspired by Test::CleanNamespaces
+
+=over
+
+=item *
+
+C<< namespaces_clean(@namespaces) >>
+
+Tests that namespaces don't contain any imported functions. (i.e. you
+haven't forgotten to use L<namespace::autoclean> or L<namespace::sweep>
+in a class).
+
+Unlike the version of this function supplied with L<Test::CleanNamespaces>,
+if C<< @namespaces >> contains more than one namespace, these will be run
+in a subtest, so the whole thing will only count as one test.
+
+=back
+
 =head2 Features inspired by Test::Requires
 
 =over
@@ -728,6 +863,7 @@ This will skip the entire test script if the requirements are not met.
 For example:
 
    use Test::Modern -requires => {
+		'perl'                 => '5.010',
       'Moose'                => '2.11',
       'namespace::autoclean' => undef,
    };
@@ -779,6 +915,7 @@ Runs a gamut of subtests on an object:
       does  => \@roles,
       can   => \@methods,
       api   => \@methods,
+		clean => $boolean,
       more  => sub {
          my $object = shift;
          ...;
@@ -789,6 +926,8 @@ C<< $object >> may be a blessed object, or an unblessed coderef which
 returns a blessed object. The C<< isa >> test runs C<< isa_ok >>; the
 C<< does >> test runs C<< does_ok >>, the C<< can >> test runs
 C<< can_ok >>, and the C<< api >> test runs C<< class_api_ok >>.
+C<< clean >> allows you to run C<< namespaces_clean >> on the object's
+class.
 
 C<< more >> introduces a coderef for running more tests. Within this
 sub you can use any of the standard Test::More, Test::LongString, etc
@@ -799,19 +938,29 @@ script to end.
 Any of the test hash keys may be omitted, in which case that test will
 not be run. C<< $name >> may be omitted.
 
+If the test succeeds, it returns the object (which may be useful for
+further tests). Otherwise, returns C<undef>.
+
 Practical example:
 
-   object_ok(
+   my $bob = object_ok(
       sub { Employee->new(name => 'Robert Jones') },
       '$bob',
       isa   => [qw( Employee Person Moo::Object )],
       does  => [qw( Employable )],
       can   => [qw( name employee_number tax_code )],
+		clean => 1,
       more  => sub {
          my $object = shift;
          is($object->name, "Robert Jones");
          like($object->employee_number, qr/^[0-9]+$/);
       },
+   );
+   
+   # make further use of $bob
+   object_ok(
+      sub { $bob->line_manager },
+      isa   => [qw( Person )],
    );
 
 =back
@@ -860,6 +1009,10 @@ Exports I<all> the L</"Features from Test::Deep">.
 =item C<< -moose >>
 
 Exports the L</"Features inspired by Test::Moose">.
+
+=item C<< -clean >>
+
+Exports the L</"Features inspired by Test::CleanNamespaces">.
 
 =item C<< -default >>
 

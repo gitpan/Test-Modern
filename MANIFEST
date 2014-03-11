@@ -21,3 +21,5 @@ t/05warnings.t
 t/06class-api-ok.t
 t/07deep.t
 t/08object-ok.t
+t/09requires-perl.t
+t/10-namespaces-clean.t

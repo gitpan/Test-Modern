@@ -7,7 +7,7 @@ my $meta = {
   "abstract"       => "commonly used test functions and features for modern Perl code",
   "author"         => ["Toby Inkster (TOBYINK) <tobyink\@cpan.org>"],
   "dynamic_config" => 0,
-  "generated_by"   => "Dist::Inkt::Profile::TOBYINK version 0.014, CPAN::Meta::Converter version 2.120921",
+  "generated_by"   => "Dist::Inkt::Profile::TOBYINK version 0.015, CPAN::Meta::Converter version 2.120921",
   "keywords"       => [],
   "license"        => ["perl_5"],
   "meta-spec"      => {
@@ -29,7 +29,8 @@ my $meta = {
                                          "Exporter::Tiny"   => "0.030",
                                          "Import::Into"     => "1.002000",
                                          "Module::Runtime"  => 0.012,
-                                         "perl"             => 5.006002,
+                                         "perl"             => 5.008001,
+                                         "superclass"       => 0.003,
                                          "Test::API"        => 0.003,
                                          "Test::Deep"       => 0.111,
                                          "Test::Fatal"      => 0.007,
@@ -48,17 +49,21 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.000_07" },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.000_08" },
                       },
   "release_status" => "testing",
   "resources"      => {
                         bugtracker   => { web => "http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern" },
                         homepage     => "https://metacpan.org/release/Test-Modern",
                         license      => ["http://dev.perl.org/licenses/"],
-                        repository   => { type => "git", web => "https://github.com/tobyink/p5-test-modern" },
+                        repository   => {
+                                          type => "git",
+                                          url  => "git://github.com/tobyink/p5-test-modern.git",
+                                          web  => "https://github.com/tobyink/p5-test-modern",
+                                        },
                         X_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => "0.000_07",
+  "version"        => "0.000_08",
 };
 
 my %dynamic_config;
