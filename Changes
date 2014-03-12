@@ -6,6 +6,12 @@ Home page:    <https://metacpan.org/release/Test-Modern>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern>
 Maintainer:   Toby Inkster (TOBYINK) <tobyink@cpan.org>
 
+0.001	2014-03-12	Initial release
+
+ [ Documentation ]
+ - Change module abstract.
+ - Update SEE ALSO links.
+
 0.000_09	2014-03-11	Preview
 
  [ Documentation ]

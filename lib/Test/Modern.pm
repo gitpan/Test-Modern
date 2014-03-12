@@ -5,7 +5,7 @@ use warnings;
 package Test::Modern;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.000_09';
+our $VERSION   = '0.001';
 
 use superclass 'Exporter::Tiny' => 0.030;
 
@@ -489,7 +489,7 @@ __END__
 
 =head1 NAME
 
-Test::Modern - commonly used test functions and features for modern Perl code
+Test::Modern - precision testing for modern perl
 
 =head1 SYNOPSIS
 
@@ -923,6 +923,9 @@ L<http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern>.
 
 =head1 SEE ALSO
 
+L<My Favourite Test::* Modules|http://blogs.perl.org/users/toby_inkster/2014/02/my-favourite-test-modules.html>,
+L<Precision Testing for Modern Perl|http://blogs.perl.org/users/toby_inkster/2014/03/precision-testing-for-modern-perl.html>.
+
 L<Test::More>,
 L<Test::Fatal>,
 L<Test::Warnings>,
@@ -936,8 +939,6 @@ L<Test::DescribeMe>.
 
 L<Test::Most> is a similar idea, but provides a slightly different
 combination of features.
-
-L<My Favourite Test::* Modules|http://blogs.perl.org/users/toby_inkster/2014/02/my-favourite-test-modules.html>.
 
 =head1 AUTHOR
 

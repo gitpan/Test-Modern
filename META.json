@@ -1,5 +1,5 @@
 {
-   "abstract" : "commonly used test functions and features for modern Perl code",
+   "abstract" : "precision testing for modern perl",
    "author" : [
       "Toby Inkster (TOBYINK) <tobyink@cpan.org>"
    ],
@@ -63,10 +63,10 @@
    "provides" : {
       "Test::Modern" : {
          "file" : "lib/Test/Modern.pm",
-         "version" : "0.000_09"
+         "version" : "0.001"
       }
    },
-   "release_status" : "testing",
+   "release_status" : "stable",
    "resources" : {
       "X_identifier" : "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
       "bugtracker" : {
@@ -82,5 +82,5 @@
          "web" : "https://github.com/tobyink/p5-test-modern"
       }
    },
-   "version" : "0.000_09"
+   "version" : "0.001"
 }

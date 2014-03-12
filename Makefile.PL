@@ -4,7 +4,7 @@ use ExtUtils::MakeMaker 6.17;
 my $EUMM = eval( $ExtUtils::MakeMaker::VERSION );
 
 my $meta = {
-  "abstract"       => "commonly used test functions and features for modern Perl code",
+  "abstract"       => "precision testing for modern perl",
   "author"         => ["Toby Inkster (TOBYINK) <tobyink\@cpan.org>"],
   "dynamic_config" => 0,
   "generated_by"   => "Dist::Inkt::Profile::TOBYINK version 0.015, CPAN::Meta::Converter version 2.120921",
@@ -49,9 +49,9 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.000_09" },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.001 },
                       },
-  "release_status" => "testing",
+  "release_status" => "stable",
   "resources"      => {
                         bugtracker   => { web => "http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern" },
                         homepage     => "https://metacpan.org/release/Test-Modern",
@@ -63,7 +63,7 @@ my $meta = {
                                         },
                         X_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => "0.000_09",
+  "version"        => 0.001,
 };
 
 my %dynamic_config;
