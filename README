@@ -69,13 +69,7 @@ DESCRIPTION
 
     `public_ok($package, @functions)`
     `import_ok($package, @functions)`
-
-    Test::Modern also provides another test modelled after `public_ok`:
-
     `class_api_ok($class, @methods)`
-        Like `public_ok`, but allows missing functions to be inherited from
-        parent classes. Extra methods in parent classes will not cause the
-        test to fail.
 
   Features from Test::LongString
     Test::Modern exports the following subs from Test::LongString:

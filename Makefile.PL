@@ -30,8 +30,7 @@ my $meta = {
                                          "Import::Into"     => "1.002000",
                                          "Module::Runtime"  => 0.012,
                                          "perl"             => 5.008001,
-                                         "superclass"       => 0.003,
-                                         "Test::API"        => 0.003,
+                                         "Test::API"        => 0.004,
                                          "Test::Deep"       => 0.111,
                                          "Test::Fatal"      => 0.007,
                                          "Test::LongString" => 0.15,
@@ -49,7 +48,7 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.001 },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.002 },
                       },
   "release_status" => "stable",
   "resources"      => {
@@ -63,7 +62,7 @@ my $meta = {
                                         },
                         X_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => 0.001,
+  "version"        => 0.002,
 };
 
 my %dynamic_config;

@@ -6,6 +6,12 @@ Home page:    <https://metacpan.org/release/Test-Modern>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern>
 Maintainer:   Toby Inkster (TOBYINK) <tobyink@cpan.org>
 
+0.002	2014-03-14
+
+ - No longer use superclass.pm.
+ - Updated: Use Test::API 0.004 which provides its own copy of
+   class_api_ok(), so Test::Modern no longer has to provide it.
+
 0.001	2014-03-12	Initial release
 
  [ Documentation ]
