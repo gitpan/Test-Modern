@@ -23,3 +23,4 @@ t/07deep.t
 t/08object-ok.t
 t/09requires-perl.t
 t/10namespaces-clean.t
+t/11without.t

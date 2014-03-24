@@ -41,7 +41,7 @@
 	doap:maintainer      <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:name            "Test-Modern";
 	doap:programming-language "Perl";
-	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_04>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_05>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_06>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_07>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_08>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_09>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-001>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-002>;
+	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_04>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_05>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_06>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_07>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_08>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_09>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-001>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-002>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-003>;
 	doap:repository      [
 		a doap:GitRepository;
 		doap:browse <https://github.com/tobyink/p5-test-modern>;
@@ -229,6 +229,23 @@
 	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.002.tar.gz>;
 	doap:revision        "0.002"^^xsd:string.
+
+<http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-003>
+	a                    doap:Version;
+	dc:identifier        "Test-Modern-0.003"^^xsd:string;
+	dc:issued            "2014-03-24"^^xsd:date;
+	doap-changeset:changeset [
+		doap-changeset:item [
+			a doap-changeset:Change;
+			rdfs:label "Load IO::File and IO::Handle like Modern::Perl does.";
+		], [
+			a doap-changeset:Addition;
+			rdfs:label "Provide a Test::Without::Module-like feature (-without).";
+		];
+	];
+	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
+	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.003.tar.gz>;
+	doap:revision        "0.003"^^xsd:string.
 
 <http://purl.org/NET/cpan-uri/person/tobyink>
 	a                    foaf:Person;

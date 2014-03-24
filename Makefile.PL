@@ -48,7 +48,7 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.002 },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.003 },
                       },
   "release_status" => "stable",
   "resources"      => {
@@ -62,7 +62,7 @@ my $meta = {
                                         },
                         X_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => 0.002,
+  "version"        => 0.003,
 };
 
 my %dynamic_config;

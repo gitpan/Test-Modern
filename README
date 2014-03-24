@@ -15,7 +15,7 @@ DESCRIPTION
     Test::CleanNamespaces.
 
     Test::Modern also automatically imposes strict and warnings on your
-    script.
+    script, and loads IO::File. (Much of the same stuff Modern::Perl does.)
 
   Features from Test::More
     Test::Modern exports the following subs from Test::More:
@@ -153,6 +153,22 @@ DESCRIPTION
               'Moose'                => '2.11',
               'namespace::autoclean' => undef,
            };
+
+  Features inspired by Test::Without::Module
+    Test::Modern does not use Test::Without::Module, but does provide the
+    following feature inspired by it:
+
+    `use Test::Modern -without => \@modules`
+        This will run the tests as if the module was not installed. Useful for
+        testing things in the absence of optional dependencies. For example:
+
+           use Test::Modern -without => [ "Class::XSAccessor" ];
+
+        It cannot suppress modules from being loaded if they are required by
+        Test::Modern itself. To get a list of what modules Test::Modern
+        requires, run the following command:
+
+           perl -MTest::Modern -le'print for sort keys %INC'
 
   Features inspired by Test::DescribeMe
     These export tags allow you to classify tests as "author tests", "release
@@ -292,7 +308,7 @@ SEE ALSO
 
     Test::More, Test::Fatal, Test::Warnings, Test::API, Test::LongString,
     Test::Deep, Test::Moose, Test::CleanNamespaces, Test::Requires,
-    Test::DescribeMe.
+    Test::Without::Module, Test::DescribeMe.
 
     Test::Most is a similar idea, but provides a slightly different
     combination of features.
