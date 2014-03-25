@@ -1,16 +1,15 @@
-use 5.008001;
+use 5.006001;
 use strict;
 use warnings;
 
 package Test::Modern;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.004';
+our $VERSION   = '0.005';
 
-use Carp             0     qw(croak);
 use Exporter::Tiny   0.030 qw();
-use IO::File         1.10  qw();
-use IO::Handle       1.23  qw();
+use IO::File         1.08  qw();
+use IO::Handle       1.21  qw();
 use Import::Into     1.002 qw();
 use Module::Runtime  0.012 qw( require_module module_notional_filename );
 use Test::More       0.96;
@@ -631,6 +630,11 @@ L<Test::Moose>, and L<Test::CleanNamespaces>.
 
 Test::Modern also automatically imposes L<strict> and L<warnings> on your
 script, and loads L<IO::File>. (Much of the same stuff L<Modern::Perl> does.)
+
+Although Test::Modern is a modern testing framework, it should run fine
+on pre-modern versions of Perl. It should be easy to install on Perl
+5.8.9 and above; and if you can persuade its dependencies to install
+(not necessarily easy!), should be OK on anything back to Perl 5.6.1.
 
 =head2 Features from Test::More
 
