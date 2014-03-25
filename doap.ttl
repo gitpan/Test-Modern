@@ -25,6 +25,9 @@
 	], [ doap-deps:on "Test::Deep 0.111"^^doap-deps:CpanId ], [
 		doap-deps:on "Test::Warnings 0.009"^^doap-deps:CpanId;
 	], [ doap-deps:on "Try::Tiny 0.15"^^doap-deps:CpanId ];
+	doap-deps:runtime-suggestion [ doap-deps:on "Test::Pod"^^doap-deps:CpanId ], [
+		doap-deps:on "Test::Pod::Coverage"^^doap-deps:CpanId;
+	], [ doap-deps:on "Test::Version"^^doap-deps:CpanId ];
 	doap-deps:test-conflict [
 		doap-deps:on "Local::This::Probably::Does::Not::Exist"^^doap-deps:CpanId;
 	], [
@@ -41,7 +44,7 @@
 	doap:maintainer      <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:name            "Test-Modern";
 	doap:programming-language "Perl";
-	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_04>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_05>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_06>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_07>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_08>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_09>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-001>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-002>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-003>;
+	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_04>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_05>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_06>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_07>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_08>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_09>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-001>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-002>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-003>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-004>;
 	doap:repository      [
 		a doap:GitRepository;
 		doap:browse <https://github.com/tobyink/p5-test-modern>;
@@ -246,6 +249,32 @@
 	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.003.tar.gz>;
 	doap:revision        "0.003"^^xsd:string.
+
+<http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-004>
+	a                    doap:Version;
+	dc:identifier        "Test-Modern-0.004"^^xsd:string;
+	dc:issued            "2014-03-25"^^xsd:date;
+	doap-changeset:changeset [
+		doap-changeset:item [
+			a doap-changeset:Change;
+			rdfs:label "Improve the implementation of -without, including better compatibility with pre-5.12 versions of Perl.";
+		], [
+			a doap-changeset:Addition;
+			rdfs:label "EXPERIMENTALLY provide Test::Pod functions.";
+		], [
+			a doap-changeset:Addition;
+			rdfs:label "EXPERIMENTALLY provide Test::Pod::Coverage functions.";
+		], [
+			a doap-changeset:Addition;
+			rdfs:label "EXPERIMENTALLY provide Test::Version functions.";
+		], [
+			a doap-changeset:Documentation;
+			rdfs:label "Mention -without in the EXPORT section of the pod.";
+		];
+	];
+	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
+	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.004.tar.gz>;
+	doap:revision        "0.004"^^xsd:string.
 
 <http://purl.org/NET/cpan-uri/person/tobyink>
 	a                    foaf:Person;

@@ -68,7 +68,7 @@ DESCRIPTION
     Test::Modern exports the following subs from Test::API:
 
     `public_ok($package, @functions)`
-    `import_ok($package, @functions)`
+    `import_ok($package, export => \@functions, export_ok => \@functions)`
     `class_api_ok($class, @methods)`
 
   Features from Test::LongString
@@ -118,6 +118,54 @@ DESCRIPTION
 
        # like Test::Deep::bag(@elements)
        TD->bag(@elements)
+
+  Features from Test::Pod and Test::Pod::Coverage
+    These features are currently considered experimental. They may be removed
+    from a future version of Test::Modern.
+
+    Test::Modern can export the following subs from Test::Pod and
+    Test::Pod::Coverage, though they are not exported by default:
+
+    `pod_file_ok($file, $description)`
+    `all_pod_files_ok(@dirs)`
+    `pod_coverage_ok($module, $params, $description)`
+    `all_pod_coverage_ok($params, $description)`
+
+    In fact, Test::Modern wraps these tests in checks to see whether
+    Test::Pod(::Coverage) is installed, and the state of the
+    `RELEASE_TESTING`, `AUTHOR_TESTING`, and `EXTENDED_TESTING` environment
+    variables. If none of those environment variables is set to true, then the
+    test is skipped altogether. If Test::Pod(::Coverage) is not installed,
+    then the test is skipped, unless `RELEASE_TESTING` is true, in which case
+    *Test::Pod(::Coverage) must be installed*.
+
+    This is usually a pretty sensible behaviour. You want authors to be made
+    aware of pod errors if possible. You want to make sure they are tested
+    before doing a release. End users probably don't want a pod formatting
+    error to prevent them from installing the software, unless they opt into
+    it using `EXTENDED_TESTING`.
+
+    Also, Test::Modern wraps the `all_*` functions to run them in a subtest
+    (because otherwise they can interfere with your test plans).
+
+  Features from Test::Version
+    These features are currently considered experimental. They may be removed
+    from a future version of Test::Modern.
+
+    Test::Modern can export the following subs from Test::Version, though they
+    are not exported by default:
+
+    `version_ok($file, $description)`
+    `version_all_ok(@dirs)`
+
+    These are wrapped similarly to those described in the "Features from
+    Test::Pod and Test::Coverage".
+
+    Test::Modern can also export another sub based on `version_all_ok`:
+
+    `version_all_same(@dirs)`
+        Acts like `version_all_ok` but also checks that all modules have the
+        same version number.
 
   Features inspired by Test::Moose
     Test::Modern does not use Test::Moose, but does provide the following
@@ -169,6 +217,9 @@ DESCRIPTION
         requires, run the following command:
 
            perl -MTest::Modern -le'print for sort keys %INC'
+
+        (Note that the actual implementation is mostly stolen from Devel::Hide
+        which seems to behave better than Test::Without::Module.)
 
   Features inspired by Test::DescribeMe
     These export tags allow you to classify tests as "author tests", "release
@@ -279,19 +330,25 @@ EXPORT
     `-clean`
         Exports the "Features inspired by Test::CleanNamespaces".
 
+    `-pod`
+        Exports the "Features from Test::Pod and Test::Pod::Coverage".
+
+    `-versions`
+        Exports the "Features from Test::Version".
+
     `-default`
-        Exports the default features -- all of the above except `-deprecated`
-        and `-deeper`. Also exports `object_ok`.
+        Exports the default features -- all of the above except `-deprecated`,
+        `-pod`, `-versions`, and `-deeper`. Also exports `object_ok`.
 
     `-all`
-        Exports all of the above features *including* `-deprecated`,
-        `-deeper`, and `object_ok`.
+        Exports all of the above features *including* `-deprecated`, `-pod`,
+        `-versions`, `-deeper`, and `object_ok`.
 
     `-author`, `-extended`, `-interactive`, and `-release`
         Classify the test script.
 
-    `-requires`
-        Specify test requirements.
+    `-requires`, `-without`
+        Specify modules required or hidden for these test cases.
 
     $TODO is currently *always* exported.
 
@@ -308,7 +365,8 @@ SEE ALSO
 
     Test::More, Test::Fatal, Test::Warnings, Test::API, Test::LongString,
     Test::Deep, Test::Moose, Test::CleanNamespaces, Test::Requires,
-    Test::Without::Module, Test::DescribeMe.
+    Test::Without::Module, Test::DescribeMe, Test::Pod, Test::Pod::Coverage,
+    Test::Version.
 
     Test::Most is a similar idea, but provides a slightly different
     combination of features.

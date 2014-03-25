@@ -16,6 +16,8 @@ Files: README
  t/09requires-perl.t
  t/10namespaces-clean.t
  t/11without.t
+ t/12pod.t
+ t/13versions.t
 Copyright: This software is copyright (c) 2014 by Toby Inkster.
 License: GPL-1.0+ or Artistic-1.0
 

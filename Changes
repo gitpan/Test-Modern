@@ -6,6 +6,18 @@ Home page:    <https://metacpan.org/release/Test-Modern>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern>
 Maintainer:   Toby Inkster (TOBYINK) <tobyink@cpan.org>
 
+0.004	2014-03-25
+
+ [ Documentation ]
+ - Mention -without in the EXPORT section of the pod.
+
+ [ Other ]
+ - Added: EXPERIMENTALLY provide Test::Pod functions.
+ - Added: EXPERIMENTALLY provide Test::Pod::Coverage functions.
+ - Added: EXPERIMENTALLY provide Test::Version functions.
+ - Improve the implementation of -without, including better compatibility
+   with pre-5.12 versions of Perl.
+
 0.003	2014-03-24
 
  - Added: Provide a Test::Without::Module-like feature (-without).

@@ -5,7 +5,7 @@ use warnings;
 package Test::Modern;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.003';
+our $VERSION   = '0.004';
 
 use Carp             0     qw(croak);
 use Exporter::Tiny   0.030 qw();
@@ -38,7 +38,7 @@ $HINTS{ author } = sub
 $HINTS{ release } = sub
 {
 	return if $ENV{RELEASE_TESTING};
-	plan skip_all => 'Not running author tests';
+	plan skip_all => 'Not running release tests';
 };
 
 $HINTS{ interactive } = sub
@@ -82,13 +82,35 @@ $HINTS{ requires } = sub
 {
 	my ($installed, %hide) = 0;
 	
+	# This implementation stolen from Devel::Hide. Keep the
+	# Perl-5.6 compatible implementation, because one day it
+	# might be nice if this module could support Perl 5.6.
+	my $_scalar_as_io = ($] >= 5.008)
+		? sub {
+			open(my($io), '<', \$_[0])
+				or die("Cannot open scalarref for IO?!");
+			return $io;
+		}
+		: sub {
+			my $scalar = shift;
+			require File::Temp;
+			my $io = File::Temp::tempfile();
+			print {$io} $scalar;
+			seek $io, 0, 0; # rewind the handle
+			return $io;
+		};
+	
 	my $inc = sub
 	{
 		my (undef, $file) = @_;
 		if ($hide{$file})
 		{
-			my @lines = ( "0;" );
-			return sub { defined($_ = shift @lines) };
+			my $oops = sprintf(
+				qq{die "Can't locate %s (hidden by %s)\\n";},
+				$file,
+				__PACKAGE__,
+			);
+			return $_scalar_as_io->($oops);
 		}
 		return;
 	};
@@ -106,7 +128,7 @@ $HINTS{ requires } = sub
 		{
 			my $file = module_notional_filename($module);
 			exists($INC{$file})
-				? croak("Cannot prevent $module from loading: it is already loaded")
+				? plan(skip_all => sprintf("cannot prevent $module from loading (it is already loaded)"))
 				: ++$hide{$file};
 		}
 		return;
@@ -126,6 +148,11 @@ our %EXPORT_TAGS = (
 	warnings => [qw( warnings warning )],
 	api      => [qw( public_ok import_ok class_api_ok )],
 	moose    => [qw( does_ok )],
+	pod      => [qw(
+		pod_file_ok all_pod_files_ok
+		pod_coverage_ok all_pod_coverage_ok
+	)],
+	versions => [qw( version_ok version_all_ok version_all_same )],
 	strings  => [qw(
 		is_string is_string_nows like_string unlike_string
 		contains_string lacks_string
@@ -473,6 +500,106 @@ sub Test::Modern::_TD::AUTOLOAD
 	}
 }
 
+# Release tests...
+{
+	sub _should_extended_test ()
+	{
+		$ENV{RELEASE_TESTING} || $ENV{AUTHOR_TESTING} || $ENV{EXTENDED_TESTING};
+	}
+	
+	sub _wrap
+	{
+		no strict qw(refs);
+		my ($module, $function, %opt) = @_;
+		
+		my $code;
+		($function, $code) = each(%$function)
+			if ref($function) eq q(HASH);
+			
+		*$function = sub
+		{
+			if ($opt{extended} and not _should_extended_test)
+			{
+				SKIP: {
+					skip 'Not running extended tests', 1;
+					pass("skipped");
+				}
+				return 1;
+			}
+			
+			if (eval "require $module")
+			{
+				$code ||= \&{"$module\::$function"};
+				if ($opt{multi})
+				{
+					my @args = @_;
+					@_ = ($function, sub {
+						@_ = @args;
+						goto $code;
+					});
+					goto \&Test::More::subtest;
+				}
+				else
+				{
+					goto $code;
+				}
+			}
+			
+			local $Test::Builder::Level = $Test::Builder::Level + 1;
+			SKIP: {
+				skip "$module only required for release testing", 1
+					unless $ENV{RELEASE_TESTING};
+				fail("$function");
+				diag("$module not installed");
+			}
+			return;
+		};
+	}
+	
+	my $_VAS = sub
+	{
+		my ($dir, $name) = @_;
+		$dir
+			= defined $dir ? $dir
+			: -d 'blib'    ? 'blib'
+			:                'lib';
+		return fail("$dir does not exist, or is not a directory")
+			unless -d $dir;
+		
+		my @files = File::Find::Rule->perl_module->in($dir);
+		$name ||= "all modules in $dir have the same version number";
+		
+		local $Test::Builder::Level = $Test::Builder::Level + 1;
+		
+		subtest $name => sub
+		{
+			my %versions;
+			for my $file (@files)
+			{
+				Test::Version::version_ok($file) or next;				
+				my $info = Module::Metadata->new_from_file($file);
+				push @{$versions{$info->version}}, $file;
+			}
+			my $ok = keys(%versions) < 2;
+			ok($ok, "single version number found");
+			if (!$ok)
+			{
+				diag("Files with version $_: @{$versions{$_}}")
+					for sort keys(%versions);
+			}
+			done_testing;
+		};
+	};
+	
+	_wrap("Test::Pod", "pod_file_ok", extended => 1);
+	_wrap("Test::Pod", "all_pod_files_ok", extended => 1, multi => 1);
+	_wrap("Test::Pod::Coverage", "pod_coverage_ok", extended => 1);
+	_wrap("Test::Pod::Coverage", "all_pod_coverage_ok", extended => 1, multi => 1);
+	_wrap("Test::Version", "version_ok", extended => 1);
+	_wrap("Test::Version", "version_all_ok", extended => 1, multi => 1);
+	_wrap("Test::Version", { "version_all_same" => $_VAS }, extended => 1);
+}
+
 1;
 
 ## no Test::Tabs
@@ -482,16 +609,6 @@ __END__
 =pod
 
 =encoding utf-8
-
-=begin trustme
-
-=item C<does_ok>
-
-=item C<object_ok>
-
-=item C<namespaces_clean>
-
-=end trustme
 
 =head1 NAME
 
@@ -607,7 +724,7 @@ Test::Modern exports the following subs from L<Test::API>:
 
 =item C<< public_ok($package, @functions) >>
 
-=item C<< import_ok($package, @functions) >>
+=item C<< import_ok($package, export => \@functions, export_ok => \@functions) >>
 
 =item C<< class_api_ok($class, @methods) >>
 
@@ -701,6 +818,74 @@ C<TD> upon which you can call them as methods:
    # like Test::Deep::bag(@elements)
    TD->bag(@elements)
 
+=head2 Features from Test::Pod and Test::Pod::Coverage
+
+B<< These features are currently considered experimental. They
+may be removed from a future version of Test::Modern. >>
+
+Test::Modern can export the following subs from L<Test::Pod> and
+L<Test::Pod::Coverage>, though they are not exported by default:
+
+=over
+
+=item C<< pod_file_ok($file, $description) >>
+
+=item C<< all_pod_files_ok(@dirs) >>
+
+=item C<< pod_coverage_ok($module, $params, $description) >>
+
+=item C<< all_pod_coverage_ok($params, $description) >>
+
+=back
+
+In fact, Test::Modern wraps these tests in checks to see whether
+Test::Pod(::Coverage) is installed, and the state of the
+C<RELEASE_TESTING>, C<AUTHOR_TESTING>, and C<EXTENDED_TESTING>
+environment variables. If none of those environment variables is set to
+true, then the test is skipped altogether. If Test::Pod(::Coverage) is
+not installed, then the test is skipped, unless C<RELEASE_TESTING> is
+true, in which case I<< Test::Pod(::Coverage) must be installed >>.
+
+This is usually a pretty sensible behaviour. You want authors to
+be made aware of pod errors if possible. You want to make sure
+they are tested before doing a release. End users probably don't
+want a pod formatting error to prevent them from installing the
+software, unless they opt into it using C<EXTENDED_TESTING>.
+
+Also, Test::Modern wraps the C<< all_* >> functions to run them
+in a subtest (because otherwise they can interfere with your test
+plans).
+
+=head2 Features from Test::Version
+
+B<< These features are currently considered experimental. They
+may be removed from a future version of Test::Modern. >>
+
+Test::Modern can export the following subs from L<Test::Version>,
+though they are not exported by default:
+
+=over
+
+=item C<< version_ok($file, $description) >>
+
+=item C<< version_all_ok(@dirs) >>
+
+=back
+
+These are wrapped similarly to those described in the
+L</"Features from Test::Pod and Test::Coverage">.
+
+Test::Modern can also export another sub based on C<version_all_ok>:
+
+=over
+
+=item C<< version_all_same(@dirs) >>
+
+Acts like C<version_all_ok> but also checks that all modules have
+the same version number.
+
+=back
+
 =head2 Features inspired by Test::Moose
 
 Test::Modern does not use L<Test::Moose>, but does provide the
@@ -773,6 +958,10 @@ Test::Modern itself. To get a list of what modules Test::Modern
 requires, run the following command:
 
    perl -MTest::Modern -le'print for sort keys %INC'
+
+(Note that the actual implementation is mostly stolen from
+L<Devel::Hide> which seems to behave better than
+L<Test::Without::Module>.)
 
 =back
 
@@ -913,23 +1102,31 @@ Exports the L</"Features inspired by Test::Moose">.
 
 Exports the L</"Features inspired by Test::CleanNamespaces">.
 
+=item C<< -pod >>
+
+Exports the L</"Features from Test::Pod and Test::Pod::Coverage">.
+
+=item C<< -versions >>
+
+Exports the L</"Features from Test::Version">.
+
 =item C<< -default >>
 
-Exports the default features -- all of the above except C<< -deprecated >>
-and C<< -deeper >>. Also exports C<object_ok>.
+Exports the default features -- all of the above except C<< -deprecated >>,
+C<< -pod >>, C<< -versions >>, and C<< -deeper >>. Also exports C<object_ok>.
 
 =item C<< -all >>
 
 Exports all of the above features I<including> C<< -deprecated >>,
-C<< -deeper >>, and C<object_ok>.
+C<< -pod >>, C<< -versions >>, C<< -deeper >>, and C<object_ok>.
 
 =item C<< -author >>, C<< -extended >>, C<< -interactive >>, and C<< -release >>
 
 Classify the test script.
 
-=item C<< -requires >>
+=item C<< -requires >>, C<< -without >>
 
-Specify test requirements.
+Specify modules required or hidden for these test cases.
 
 =back
 
@@ -955,7 +1152,10 @@ L<Test::Moose>,
 L<Test::CleanNamespaces>,
 L<Test::Requires>,
 L<Test::Without::Module>,
-L<Test::DescribeMe>.
+L<Test::DescribeMe>,
+L<Test::Pod>,
+L<Test::Pod::Coverage>,
+L<Test::Version>.
 
 L<Test::Most> is a similar idea, but provides a slightly different
 combination of features.
