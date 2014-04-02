@@ -1,10 +1,18 @@
+package Local::Foo;
+
+sub bar { 42 }
+
+1;
+
+__END__
+
 =pod
 
 =encoding utf-8
 
 =head1 PURPOSE
 
-Test that Test::Modern's pod testing works.
+Support file for C<< t/15tlib.t >>.
 
 =head1 AUTHOR
 
@@ -18,15 +26,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-use Test::Modern qw( -more -pod );
-
-pod_file_ok(__FILE__);
-
-all_pod_files_ok();
-
-pod_coverage_ok("Test::Modern");
-
-all_pod_coverage_ok();
-
-done_testing( 4 + !$ENV{PERL_TEST_MODERN_ALLOW_WARNINGS} );

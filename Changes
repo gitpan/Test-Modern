@@ -6,6 +6,14 @@ Home page:    <https://metacpan.org/release/Test-Modern>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern>
 Maintainer:   Toby Inkster (TOBYINK) <tobyink@cpan.org>
 
+0.006	2014-04-02
+
+ - Added: EXPERIMENTALLY provide Test::Lib-like behaviour, and a related
+   -lib export tag.
+ - Added: Support an environment variable PERL_TEST_MODERN_ALLOW_WARNINGS
+   to allow end-users to skip running end warnings tests.
+ - Added: shouldnt_warn function.
+
 0.005	2014-03-25
 
  - Support Perl 5.6.1+.

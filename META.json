@@ -67,7 +67,7 @@
    "provides" : {
       "Test::Modern" : {
          "file" : "lib/Test/Modern.pm",
-         "version" : "0.005"
+         "version" : "0.006"
       }
    },
    "release_status" : "stable",
@@ -86,5 +86,5 @@
          "web" : "https://github.com/tobyink/p5-test-modern"
       }
    },
-   "version" : "0.005"
+   "version" : "0.006"
 }

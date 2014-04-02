@@ -26,3 +26,6 @@ t/10namespaces-clean.t
 t/11without.t
 t/12pod.t
 t/13versions.t
+t/14shouldntwarn.t
+t/15tlib.t
+t/lib/Local/Foo.pm

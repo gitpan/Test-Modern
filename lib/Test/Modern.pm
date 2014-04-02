@@ -5,9 +5,11 @@ use warnings;
 package Test::Modern;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.005';
+our $VERSION   = '0.006';
 
+use Cwd              0     qw();
 use Exporter::Tiny   0.030 qw();
+use File::Spec       0     qw();
 use IO::File         1.08  qw();
 use IO::Handle       1.21  qw();
 use Import::Into     1.002 qw();
@@ -15,7 +17,7 @@ use Module::Runtime  0.012 qw( require_module module_notional_filename );
 use Test::More       0.96;
 use Test::API        0.004;
 use Test::Fatal      0.007;
-use Test::Warnings   0.009 qw( warning warnings );
+use Test::Warnings   0.009 qw( warning warnings ), ($ENV{PERL_TEST_MODERN_ALLOW_WARNINGS} ? ':no_end_test' : ());
 use Test::LongString 0.15;
 use Test::Deep       0.111 qw( :v1 );
 use Try::Tiny        0.15  qw( try catch );
@@ -77,6 +79,8 @@ $HINTS{ requires } = sub
 	}
 	return;
 };
+
+$HINTS{ lib } = sub { $_[3]{lib}++; () };
 
 {
 	my ($installed, %hide) = 0;
@@ -170,7 +174,7 @@ our %EXPORT_TAGS = (
 );
 
 our @EXPORT_OK = (
-	'object_ok',
+	'object_ok', 'shouldnt_warn',
 	map(@$_, grep { ref($_) eq 'ARRAY' } values(%EXPORT_TAGS)),
 );
 
@@ -196,13 +200,16 @@ sub import
 	
 	push @_, @EXPORT if $symbols == 0;
 	
-	unshift @_, $me;
+	my $globals = ref($_[0]) eq 'HASH' ? shift() : {};
+	$globals->{into_file} = (caller)[1] unless ref($globals->{into});
+	
+	unshift @_, $me, $globals;
 	goto \&Exporter::Tiny::import;
 }
 
 sub _exporter_validate_opts
 {
-	shift;
+	my $me = shift;
 	my ($opts) = @_;
 	my $caller = $opts->{into};
 	
@@ -218,6 +225,46 @@ sub _exporter_validate_opts
 	return if ref $caller;
 	'strict'->import::into($caller);
 	'warnings'->import::into($caller);
+	$me->_setup_inc($opts);
+}
+
+sub _setup_inc
+{
+	shift;
+	my ($opts) = @_;
+	
+	return unless exists($opts->{into_file});
+	
+	my $dir = do {
+		my @tmp = 'File::Spec'->splitpath($opts->{into_file});
+		pop @tmp;
+		'File::Spec'->catpath(@tmp);
+	};
+	
+	my $found;
+	LEVEL: for my $i (0..5)
+	{
+		my $t_dir    = 'File::Spec'->catdir($dir, (('File::Spec'->updir) x $i), 't');
+		my $xt_dir   = 'File::Spec'->catdir($dir, (('File::Spec'->updir) x $i), 'xt');
+		
+		-d $t_dir or -d $xt_dir or next LEVEL;
+		
+		my $tlib_dir = 'File::Spec'->catdir($t_dir, 'lib');
+		
+		if (-d $tlib_dir)
+		{
+			require lib;
+			'lib'->import(Cwd::abs_path $tlib_dir);
+			$found++;
+		}
+		
+		last LEVEL if $found;
+	}
+	
+	if ($opts->{lib} and not $found)
+	{
+		BAIL_OUT("Expected to find directory t/lib!");
+	}
 }
 
 # Additional exports
@@ -599,6 +646,21 @@ sub Test::Modern::_TD::AUTOLOAD
 	_wrap("Test::Version", { "version_all_same" => $_VAS }, extended => 1);
 }
 
+sub shouldnt_warn (&)
+{
+	my @warnings = do {
+		local $Test::Builder::Level = $Test::Builder::Level + 3;
+		&Test::Warnings::warnings(@_);
+	};
+	
+	my $old = $TODO;
+	$TODO = "shouldn't warn block";
+	local $Test::Builder::Level = $Test::Builder::Level + 1;
+	ok(scalar(@warnings)==0, "no (unexpected) warnings");
+	diag("Saw warning: $_") for @warnings;
+	$TODO = $old;
+}
+
 1;
 
 ## no Test::Tabs
@@ -608,6 +670,8 @@ __END__
 =pod
 
 =encoding utf-8
+
+=for stopwords todo
 
 =head1 NAME
 
@@ -719,6 +783,20 @@ Test::Modern exports the following subs from L<Test::Warnings>:
 In addition, Test::Modern always enables the C<had_no_warnings> test at
 the end of the file, ensuring that your test script generated no warnings
 other than the expected ones which were caught by C<warnings> blocks.
+(See also C<PERL_TEST_MODERN_ALLOW_WARNINGS> in L</"ENVIRONMENT">.)
+
+Test::Modern can also export an additional function for testing warnings,
+but does not export it by default:
+
+=over
+
+=item C<< shouldnt_warn { BLOCK } >>
+
+Runs a block of code that will hopefully not warn, but might. Tests that
+it doesn't warn, but performs that test as a "todo" test, so if it fails,
+your test suite can still pass.
+
+=back
 
 =head2 Features from Test::API
 
@@ -989,6 +1067,21 @@ various environment variables.
 
 =back
 
+=head2 Features inspired by Test::Lib
+
+B<< These features are currently considered experimental. They
+may be removed from a future version of Test::Modern. >>
+
+Test::Modern tries to find a directory called C<< t/lib >> by
+traversing up the directory tree from the caller file. If found,
+this directory will be added to C<< @INC >>.
+
+L<Test::Lib> would croak if such a directory cannot be found.
+L<Test::Modern> carries on if it can't find it. If you want something
+more like the Test::Lib behaviour, use the C<< -lib >> import tag:
+
+   use Test::Modern -lib;
+
 =head2 Brand Spanking New Features
 
 Test::Modern provides a shortcut which combines several features it has
@@ -1122,7 +1215,8 @@ C<< -pod >>, C<< -versions >>, and C<< -deeper >>. Also exports C<object_ok>.
 =item C<< -all >>
 
 Exports all of the above features I<including> C<< -deprecated >>,
-C<< -pod >>, C<< -versions >>, C<< -deeper >>, and C<object_ok>.
+C<< -pod >>, C<< -versions >>, C<< -deeper >>, C<object_ok>, and
+C<shouldnt_warn>.
 
 =item C<< -author >>, C<< -extended >>, C<< -interactive >>, and C<< -release >>
 
@@ -1132,9 +1226,42 @@ Classify the test script.
 
 Specify modules required or hidden for these test cases.
 
+=item C<< -lib >>
+
+Makes the absence of a C<< t/lib >> directory fatal.
+
+See L</"Features inspired by Test::Lib">.
+
 =back
 
 C<< $TODO >> is currently I<always> exported.
+
+=head1 ENVIRONMENT
+
+Test::Modern is affected by the following environment variables:
+
+=over
+
+=item C<AUTHOR_TESTING>, C<AUTOMATED_TESTING>, C<EXTENDED_TESTING>, C<RELEASE_TESTING>
+
+These variables affect the behaviour of Test::Modern's pod-checking and
+version-checking. See L</"Features from Test::Pod and Test::Coverage">
+and L</"Features from Test::Version">.
+
+They also can trigger certain import tags to skip a test script. See
+L</"Features inspired by Test::DescribeMe">.
+
+=item C<PERL_TEST_MODERN_ALLOW_WARNINGS>
+
+Setting this to true allows you to disable L<Test::Warnings>' end test.
+
+Normally the end test will cause a test script to fail if any unexpected
+warnings are encountered during its execution. New versions of Perl, and
+upgrades of dependencies can cause a previously good test suite to start
+emitting warnings. This environment variable can be used as a "quick fix"
+to get the test suite passing again.
+
+=back
 
 =head1 BUGS
 
@@ -1157,6 +1284,7 @@ L<Test::CleanNamespaces>,
 L<Test::Requires>,
 L<Test::Without::Module>,
 L<Test::DescribeMe>,
+L<Test::Lib>,
 L<Test::Pod>,
 L<Test::Pod::Coverage>,
 L<Test::Version>.

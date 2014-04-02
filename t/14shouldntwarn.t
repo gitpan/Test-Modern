@@ -4,7 +4,7 @@
 
 =head1 PURPOSE
 
-Test that Test::Modern's pod testing works.
+Test that Test::Modern's C<shouldnt_warn> function works.
 
 =head1 AUTHOR
 
@@ -19,14 +19,20 @@ the same terms as the Perl 5 programming language system itself.
 
 =cut
 
-use Test::Modern qw( -more -pod );
+use Test::Modern qw( -more shouldnt_warn );
 
-pod_file_ok(__FILE__);
+shouldnt_warn {
+	
+	is(1, 1);
+	
+	is(2, 2);
+	
+	my $x = "hello";
+	my $y = 1 + $x;
+	
+	is(3, 3);
+	
+	is(4, 4);
+};
 
-all_pod_files_ok();
-
-pod_coverage_ok("Test::Modern");
-
-all_pod_coverage_ok();
-
-done_testing( 4 + !$ENV{PERL_TEST_MODERN_ALLOW_WARNINGS} );
+done_testing;

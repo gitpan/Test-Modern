@@ -67,7 +67,16 @@ DESCRIPTION
 
     In addition, Test::Modern always enables the `had_no_warnings` test at the
     end of the file, ensuring that your test script generated no warnings
-    other than the expected ones which were caught by `warnings` blocks.
+    other than the expected ones which were caught by `warnings` blocks. (See
+    also `PERL_TEST_MODERN_ALLOW_WARNINGS` in "ENVIRONMENT".)
+
+    Test::Modern can also export an additional function for testing warnings,
+    but does not export it by default:
+
+    `shouldnt_warn { BLOCK }`
+        Runs a block of code that will hopefully not warn, but might. Tests
+        that it doesn't warn, but performs that test as a "todo" test, so if
+        it fails, your test suite can still pass.
 
   Features from Test::API
     Test::Modern exports the following subs from Test::API:
@@ -238,6 +247,20 @@ DESCRIPTION
     `use Test::Modern -extended`
     `use Test::Modern -interactive`
 
+  Features inspired by Test::Lib
+    These features are currently considered experimental. They may be removed
+    from a future version of Test::Modern.
+
+    Test::Modern tries to find a directory called `t/lib` by traversing up the
+    directory tree from the caller file. If found, this directory will be
+    added to @INC.
+
+    Test::Lib would croak if such a directory cannot be found. Test::Modern
+    carries on if it can't find it. If you want something more like the
+    Test::Lib behaviour, use the `-lib` import tag:
+
+       use Test::Modern -lib;
+
   Brand Spanking New Features
     Test::Modern provides a shortcut which combines several features it has
     pilfered from other testing modules:
@@ -347,7 +370,7 @@ EXPORT
 
     `-all`
         Exports all of the above features *including* `-deprecated`, `-pod`,
-        `-versions`, `-deeper`, and `object_ok`.
+        `-versions`, `-deeper`, `object_ok`, and `shouldnt_warn`.
 
     `-author`, `-extended`, `-interactive`, and `-release`
         Classify the test script.
@@ -355,7 +378,33 @@ EXPORT
     `-requires`, `-without`
         Specify modules required or hidden for these test cases.
 
+    `-lib`
+        Makes the absence of a `t/lib` directory fatal.
+
+        See "Features inspired by Test::Lib".
+
     $TODO is currently *always* exported.
+
+ENVIRONMENT
+    Test::Modern is affected by the following environment variables:
+
+    `AUTHOR_TESTING`, `AUTOMATED_TESTING`, `EXTENDED_TESTING`,
+    `RELEASE_TESTING`
+        These variables affect the behaviour of Test::Modern's pod-checking
+        and version-checking. See "Features from Test::Pod and Test::Coverage"
+        and "Features from Test::Version".
+
+        They also can trigger certain import tags to skip a test script. See
+        "Features inspired by Test::DescribeMe".
+
+    `PERL_TEST_MODERN_ALLOW_WARNINGS`
+        Setting this to true allows you to disable Test::Warnings' end test.
+
+        Normally the end test will cause a test script to fail if any
+        unexpected warnings are encountered during its execution. New versions
+        of Perl, and upgrades of dependencies can cause a previously good test
+        suite to start emitting warnings. This environment variable can be
+        used as a "quick fix" to get the test suite passing again.
 
 BUGS
     Please report any bugs to
@@ -370,8 +419,8 @@ SEE ALSO
 
     Test::More, Test::Fatal, Test::Warnings, Test::API, Test::LongString,
     Test::Deep, Test::Moose, Test::CleanNamespaces, Test::Requires,
-    Test::Without::Module, Test::DescribeMe, Test::Pod, Test::Pod::Coverage,
-    Test::Version.
+    Test::Without::Module, Test::DescribeMe, Test::Lib, Test::Pod,
+    Test::Pod::Coverage, Test::Version.
 
     Test::Most is a similar idea, but provides a slightly different
     combination of features.

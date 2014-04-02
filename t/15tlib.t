@@ -4,7 +4,7 @@
 
 =head1 PURPOSE
 
-Test that Test::Modern's pod testing works.
+Test that Test::Modern automatically pushes C<t/lib> onto C<< @INC >>.
 
 =head1 AUTHOR
 
@@ -19,14 +19,10 @@ the same terms as the Perl 5 programming language system itself.
 
 =cut
 
-use Test::Modern qw( -more -pod );
+use Test::Modern qw( -lib -more use_ok );
 
-pod_file_ok(__FILE__);
+use_ok('Local::Foo');
 
-all_pod_files_ok();
+is( Local::Foo::bar(), 42 );
 
-pod_coverage_ok("Test::Modern");
-
-all_pod_coverage_ok();
-
-done_testing( 4 + !$ENV{PERL_TEST_MODERN_ALLOW_WARNINGS} );
+done_testing;
