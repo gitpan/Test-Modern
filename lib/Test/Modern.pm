@@ -5,7 +5,7 @@ use warnings;
 package Test::Modern;
 
 our $AUTHORITY = 'cpan:TOBYINK';
-our $VERSION   = '0.006';
+our $VERSION   = '0.007';
 
 use Cwd              0     qw();
 use Exporter::Tiny   0.030 qw();
@@ -236,9 +236,8 @@ sub _setup_inc
 	return unless exists($opts->{into_file});
 	
 	my $dir = do {
-		my @tmp = 'File::Spec'->splitpath($opts->{into_file});
-		pop @tmp;
-		'File::Spec'->catpath(@tmp);
+		my ($v, $d) = 'File::Spec'->splitpath($opts->{into_file});
+		'File::Spec'->catpath($v, $d, '');
 	};
 	
 	my $found;
