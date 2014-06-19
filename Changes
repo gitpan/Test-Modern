@@ -6,6 +6,12 @@ Home page:    <https://metacpan.org/release/Test-Modern>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern>
 Maintainer:   Toby Inkster (TOBYINK) <tobyink@cpan.org>
 
+0.008	2014-06-19
+
+ [ Packaging ]
+ - Package with a newer Dist::Inkt to provide a better Makefile.PL (copes
+   better with missing CPAN::Meta::Requirements).
+
 0.007	2014-04-10
 
  [ Bug Fixes ]

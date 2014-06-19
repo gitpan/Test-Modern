@@ -7,7 +7,7 @@ my $meta = {
   "abstract"       => "precision testing for modern perl",
   "author"         => ["Toby Inkster (TOBYINK) <tobyink\@cpan.org>"],
   "dynamic_config" => 0,
-  "generated_by"   => "Dist::Inkt::Profile::TOBYINK version 0.015, CPAN::Meta::Converter version 2.120921",
+  "generated_by"   => "Dist::Inkt::Profile::TOBYINK version 0.016, CPAN::Meta::Converter version 2.140640",
   "keywords"       => [],
   "license"        => ["perl_5"],
   "meta-spec"      => {
@@ -23,7 +23,7 @@ my $meta = {
                                          "ExtUtils::MakeMaker"      => 6.17,
                                        },
                                      },
-                        develop   => { recommends => { "Dist::Inkt" => 0.001 } },
+                        develop   => { suggests => { "Dist::Inkt::Profile::TOBYINK" => 0 } },
                         runtime   => {
                                        requires => {
                                                      "Exporter::Tiny"   => "0.030",
@@ -49,7 +49,7 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.007 },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.008 },
                       },
   "release_status" => "stable",
   "resources"      => {
@@ -63,14 +63,14 @@ my $meta = {
                                         },
                         X_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => 0.007,
+  "version"        => 0.008,
 };
 
 my %dynamic_config;
 for my $stage (keys %{$meta->{prereqs}})
 {
 	my $conflicts = $meta->{prereqs}{$stage}{conflicts} or next;
-	require CPAN::Meta::Requirements;
+	eval { require CPAN::Meta::Requirements } or last;
 	$conflicts = 'CPAN::Meta::Requirements'->from_string_hash($conflicts);
 	
 	for my $module ($conflicts->required_modules)
