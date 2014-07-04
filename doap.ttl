@@ -47,7 +47,7 @@
 	doap:maintainer      <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:name            "Test-Modern";
 	doap:programming-language "Perl";
-	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_04>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_05>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_06>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_07>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_08>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_09>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-001>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-002>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-003>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-004>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-005>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-006>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-007>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-008>;
+	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_04>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_05>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_06>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_07>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_08>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_09>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-001>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-002>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-003>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-004>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-005>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-006>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-007>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-008>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-009>;
 	doap:repository      [
 		a doap:GitRepository;
 		doap:browse <https://github.com/tobyink/p5-test-modern>;
@@ -342,6 +342,26 @@
 	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.008.tar.gz>;
 	doap:revision        "0.008"^^xsd:string.
+
+<http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-009>
+	a                    doap:Version;
+	dc:identifier        "Test-Modern-0.009"^^xsd:string;
+	dc:issued            "2014-07-04"^^xsd:date;
+	doap-changeset:changeset [
+		doap-changeset:item [
+			a doap-changeset:Addition;
+			rdfs:label "Implement an `-internet` feature allowing test scripts to declare they need access to the Internet. This honours the NO_NETWORK_TESTS environment variable.";
+		], [
+			a doap-changeset:Update;
+			rdfs:label "Improved `namespaces_clean` implementation along the same lines as recent changes to Test::CleanNamespaces.";
+		], [
+			a doap-changeset:Change;
+			rdfs:label "Precautionary bypassing of prototype for internal calls to `Test::More::subtest`.";
+		];
+	];
+	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
+	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.009.tar.gz>;
+	doap:revision        "0.009"^^xsd:string.
 
 <http://purl.org/NET/cpan-uri/person/tobyink>
 	a                    foaf:Person;

@@ -216,6 +216,22 @@ DESCRIPTION
               'namespace::autoclean' => undef,
            };
 
+  Features inspired by Test::RequiresInternet
+    Similarly you can skip the test script if an Internet connection is not
+    available:
+
+       use Test::Modern -internet;
+
+    You can check for the ability to connect to particular hosts and ports:
+
+       use Test::Modern -internet => [
+          'www.example.com'  => 'http',
+          '8.8.8.8'          => 53,
+       ];
+
+    Test::Modern does not use Test::RequiresInternet but I've stolen much of
+    the latter's implementation.
+
   Features inspired by Test::Without::Module
     Test::Modern does not use Test::Without::Module, but does provide the
     following feature inspired by it:
@@ -375,6 +391,9 @@ EXPORT
     `-author`, `-extended`, `-interactive`, and `-release`
         Classify the test script.
 
+    `-internet`
+        The test script requires Internet access.
+
     `-requires`, `-without`
         Specify modules required or hidden for these test cases.
 
@@ -396,6 +415,11 @@ ENVIRONMENT
 
         They also can trigger certain import tags to skip a test script. See
         "Features inspired by Test::DescribeMe".
+
+    `NO_NETWORK_TESTS`
+        Automatically skips any tests which indicate that they require
+        Internet access, without even checking to see if the Internet is
+        accessible. See "Features inspired by Test::RequiresInternet".
 
     `PERL_TEST_MODERN_ALLOW_WARNINGS`
         Setting this to true allows you to disable Test::Warnings' end test.
@@ -419,8 +443,8 @@ SEE ALSO
 
     Test::More, Test::Fatal, Test::Warnings, Test::API, Test::LongString,
     Test::Deep, Test::Moose, Test::CleanNamespaces, Test::Requires,
-    Test::Without::Module, Test::DescribeMe, Test::Lib, Test::Pod,
-    Test::Pod::Coverage, Test::Version.
+    Test::Without::Module, Test::RequiresInternet, Test::DescribeMe,
+    Test::Lib, Test::Pod, Test::Pod::Coverage, Test::Version.
 
     Test::Most is a similar idea, but provides a slightly different
     combination of features.
