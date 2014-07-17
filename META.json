@@ -1,7 +1,8 @@
 {
    "abstract" : "precision testing for modern perl",
    "author" : [
-      "Toby Inkster (TOBYINK) <tobyink@cpan.org>"
+      "Toby Inkster (TOBYINK) <tobyink@cpan.org>",
+      ""
    ],
    "dynamic_config" : 0,
    "generated_by" : "Dist::Inkt::Profile::TOBYINK version 0.016, CPAN::Meta::Converter version 2.140640",
@@ -67,7 +68,7 @@
    "provides" : {
       "Test::Modern" : {
          "file" : "lib/Test/Modern.pm",
-         "version" : "0.009"
+         "version" : "0.010"
       }
    },
    "release_status" : "stable",
@@ -86,5 +87,5 @@
          "web" : "https://github.com/tobyink/p5-test-modern"
       }
    },
-   "version" : "0.009"
+   "version" : "0.010"
 }

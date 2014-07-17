@@ -202,6 +202,45 @@ DESCRIPTION
         namespace, these will be run in a subtest, so the whole thing will
         only count as one test.
 
+  Features inspired by Test::Benchmark
+    Test::Modern does not use Test::Benchmark, but does provide the following
+    feature inspired by it:
+
+    `is_fastest($implementation, $times, \%implementations, $desc)`
+           use Test::Modern qw( is_fastest );
+   
+           is_fastest("speedy", -1, {
+              "speedy"     => sub { ... },
+              "slowcoach"  => sub { ... },
+           });
+
+        This ensures that the named coderef runs the fastest out of a hashref
+        of alternatives. The -1 parameter in the example is the number of
+        times to run the coderefs (see Benchmark for more details, including
+        how numbers less than zero are interpreted).
+
+    Caveat: on fast computers, a set of coderefs that you might expect to
+    differ in speed might all run in a negligible period of time, and thus be
+    rounded to zero, in which case your test case could randomly fail. Use
+    this test with caution!
+
+    Caveat the second: these tests tend to be slow. Use sparingly.
+
+    Because of the aforementioned caveats, it is a good idea to move your
+    benchmarking tests into separate test scripts, keeping an imaginary wall
+    between them and the bulk of your test suite (which tests correctness
+    rather than speed).
+
+    Test::Modern provides an import hint suitable for including at the top of
+    these benchmarking tests to mark them as being primarily concerned with
+    speed:
+
+       use Test::Modern -benchmark;
+
+    This will not only import the `is_fastest` function, but will also *skip
+    the entire script* unless one of the `EXTENDED_TESTING` or
+    `RELEASE_TESTING` environment variables is set.
+
   Features inspired by Test::Requires
     Test::Modern does not use Test::Requires, but does provide the following
     feature inspired by it:
@@ -391,6 +430,9 @@ EXPORT
     `-author`, `-extended`, `-interactive`, and `-release`
         Classify the test script.
 
+    `-benchmark`
+        The test script consists mostly of benchmarking.
+
     `-internet`
         The test script requires Internet access.
 
@@ -401,6 +443,10 @@ EXPORT
         Makes the absence of a `t/lib` directory fatal.
 
         See "Features inspired by Test::Lib".
+
+    `-verbose`
+        Makes test output more verbose. (Currently only `is_faster` takes
+        notice of this.)
 
     $TODO is currently *always* exported.
 
@@ -414,7 +460,8 @@ ENVIRONMENT
         and "Features from Test::Version".
 
         They also can trigger certain import tags to skip a test script. See
-        "Features inspired by Test::DescribeMe".
+        "Features inspired by Test::DescribeMe", and "Features inspired by
+        Test::Benchmark"
 
     `NO_NETWORK_TESTS`
         Automatically skips any tests which indicate that they require

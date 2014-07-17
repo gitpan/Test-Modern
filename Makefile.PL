@@ -5,7 +5,7 @@ my $EUMM = eval( $ExtUtils::MakeMaker::VERSION );
 
 my $meta = {
   "abstract"       => "precision testing for modern perl",
-  "author"         => ["Toby Inkster (TOBYINK) <tobyink\@cpan.org>"],
+  "author"         => ["Toby Inkster (TOBYINK) <tobyink\@cpan.org>", "unknown"],
   "dynamic_config" => 0,
   "generated_by"   => "Dist::Inkt::Profile::TOBYINK version 0.016, CPAN::Meta::Converter version 2.140640",
   "keywords"       => [],
@@ -49,7 +49,7 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.009 },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.010" },
                       },
   "release_status" => "stable",
   "resources"      => {
@@ -63,7 +63,7 @@ my $meta = {
                                         },
                         X_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => 0.009,
+  "version"        => "0.010",
 };
 
 my %dynamic_config;

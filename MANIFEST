@@ -28,4 +28,5 @@ t/12pod.t
 t/13versions.t
 t/14shouldntwarn.t
 t/15tlib.t
+t/16bench.t
 t/lib/Local/Foo.pm
