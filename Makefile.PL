@@ -5,9 +5,9 @@ my $EUMM = eval( $ExtUtils::MakeMaker::VERSION );
 
 my $meta = {
   "abstract"       => "precision testing for modern perl",
-  "author"         => ["Toby Inkster (TOBYINK) <tobyink\@cpan.org>", "unknown"],
+  "author"         => ["Toby Inkster (TOBYINK) <tobyink\@cpan.org>"],
   "dynamic_config" => 0,
-  "generated_by"   => "Dist::Inkt::Profile::TOBYINK version 0.016, CPAN::Meta::Converter version 2.140640",
+  "generated_by"   => "Dist::Inkt::Profile::TOBYINK version 0.021, CPAN::Meta::Converter version 2.140640",
   "keywords"       => [],
   "license"        => ["perl_5"],
   "meta-spec"      => {
@@ -25,20 +25,20 @@ my $meta = {
                                      },
                         develop   => { suggests => { "Dist::Inkt::Profile::TOBYINK" => 0 } },
                         runtime   => {
-                                       requires => {
-                                                     "Exporter::Tiny"   => "0.030",
-                                                     "Import::Into"     => "1.002000",
-                                                     "Module::Runtime"  => 0.012,
-                                                     "perl"             => 5.006001,
-                                                     "Test::API"        => 0.004,
-                                                     "Test::Deep"       => 0.111,
-                                                     "Test::Fatal"      => 0.007,
-                                                     "Test::LongString" => 0.15,
-                                                     "Test::More"       => 0.96,
-                                                     "Test::Warnings"   => 0.009,
-                                                     "Try::Tiny"        => 0.15,
-                                                   },
-                                       suggests => { "Test::Pod" => 0, "Test::Pod::Coverage" => 0, "Test::Version" => 0 },
+                                       recommends => { "Test::LongString" => 0.15 },
+                                       requires   => {
+                                                       "Exporter::Tiny"  => "0.030",
+                                                       "Import::Into"    => "1.002000",
+                                                       "Module::Runtime" => 0.012,
+                                                       "perl"            => 5.006001,
+                                                       "Test::API"       => 0.004,
+                                                       "Test::Deep"      => 0.111,
+                                                       "Test::Fatal"     => 0.007,
+                                                       "Test::More"      => 0.96,
+                                                       "Test::Warnings"  => 0.009,
+                                                       "Try::Tiny"       => 0.15,
+                                                     },
+                                       suggests   => { "Test::Pod" => 0, "Test::Pod::Coverage" => 0, "Test::Version" => 0 },
                                      },
                         test      => {
                                        conflicts => {
@@ -49,7 +49,7 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => "0.010" },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.011 },
                       },
   "release_status" => "stable",
   "resources"      => {
@@ -61,9 +61,9 @@ my $meta = {
                                           url  => "git://github.com/tobyink/p5-test-modern.git",
                                           web  => "https://github.com/tobyink/p5-test-modern",
                                         },
-                        X_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
+                        x_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => "0.010",
+  "version"        => 0.011,
 };
 
 my %dynamic_config;

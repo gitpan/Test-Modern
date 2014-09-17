@@ -95,6 +95,11 @@ DESCRIPTION
     `contains_string($haystack, $needle, $description)`
     `lacks_string($haystack, $needle, $description)`
 
+    Actually Test::Modern provides these via a wrapper. If Test::LongString is
+    not installed then Test::Modern will provide a fallback implementation
+    using Test::More's `is`, `isnt`, `like`, and `unlike` functions. (The
+    diagnostics won't be as good in the case of failures.)
+
   Features from Test::Deep
     Test::Modern exports the following subs from Test::Deep:
 
