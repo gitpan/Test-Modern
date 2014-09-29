@@ -4,7 +4,7 @@
       "Toby Inkster (TOBYINK) <tobyink@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Inkt::Profile::TOBYINK version 0.021, CPAN::Meta::Converter version 2.140640",
+   "generated_by" : "Dist::Inkt::Profile::TOBYINK version 0.023, CPAN::Meta::Converter version 2.140640",
    "keywords" : [],
    "license" : [
       "perl_5"
@@ -26,14 +26,16 @@
    "optional_features" : {},
    "prereqs" : {
       "configure" : {
+         "recommends" : {
+            "CPAN::Meta::Requirements" : "2.000"
+         },
          "requires" : {
-            "CPAN::Meta::Requirements" : "2.000",
             "ExtUtils::MakeMaker" : "6.17"
          }
       },
       "develop" : {
          "suggests" : {
-            "Dist::Inkt::Profile::TOBYINK" : "0"
+            "Dist::Inkt::Profile::TOBYINK" : "0.023"
          }
       },
       "runtime" : {
@@ -69,7 +71,7 @@
    "provides" : {
       "Test::Modern" : {
          "file" : "lib/Test/Modern.pm",
-         "version" : "0.011"
+         "version" : "0.012"
       }
    },
    "release_status" : "stable",
@@ -88,5 +90,5 @@
       },
       "x_identifier" : "http://purl.org/NET/cpan-uri/dist/Test-Modern/project"
    },
-   "version" : "0.011"
+   "version" : "0.012"
 }

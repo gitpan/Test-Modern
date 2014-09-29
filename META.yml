@@ -4,10 +4,9 @@ author:
   - 'Toby Inkster (TOBYINK) <tobyink@cpan.org>'
 build_requires: {}
 configure_requires:
-  CPAN::Meta::Requirements: '2.000'
   ExtUtils::MakeMaker: '6.17'
 dynamic_config: 0
-generated_by: 'Dist::Inkt::Profile::TOBYINK version 0.021, CPAN::Meta::Converter version 2.140640'
+generated_by: 'Dist::Inkt::Profile::TOBYINK version 0.023, CPAN::Meta::Converter version 2.140640'
 keywords: []
 license: perl
 meta-spec:
@@ -25,7 +24,7 @@ optional_features: {}
 provides:
   Test::Modern:
     file: lib/Test/Modern.pm
-    version: '0.011'
+    version: '0.012'
 recommends:
   Test::LongString: '0.15'
 requires:
@@ -45,4 +44,4 @@ resources:
   homepage: https://metacpan.org/release/Test-Modern
   license: http://dev.perl.org/licenses/
   repository: git://github.com/tobyink/p5-test-modern.git
-version: '0.011'
+version: '0.012'

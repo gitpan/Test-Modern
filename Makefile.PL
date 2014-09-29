@@ -7,7 +7,7 @@ my $meta = {
   "abstract"       => "precision testing for modern perl",
   "author"         => ["Toby Inkster (TOBYINK) <tobyink\@cpan.org>"],
   "dynamic_config" => 0,
-  "generated_by"   => "Dist::Inkt::Profile::TOBYINK version 0.021, CPAN::Meta::Converter version 2.140640",
+  "generated_by"   => "Dist::Inkt::Profile::TOBYINK version 0.023, CPAN::Meta::Converter version 2.140640",
   "keywords"       => [],
   "license"        => ["perl_5"],
   "meta-spec"      => {
@@ -18,12 +18,10 @@ my $meta = {
   "no_index"       => { directory => ["eg", "examples", "inc", "t", "xt"] },
   "prereqs"        => {
                         configure => {
-                                       requires => {
-                                         "CPAN::Meta::Requirements" => "2.000",
-                                         "ExtUtils::MakeMaker"      => 6.17,
-                                       },
+                                       recommends => { "CPAN::Meta::Requirements" => "2.000" },
+                                       requires   => { "ExtUtils::MakeMaker" => 6.17 },
                                      },
-                        develop   => { suggests => { "Dist::Inkt::Profile::TOBYINK" => 0 } },
+                        develop   => { suggests => { "Dist::Inkt::Profile::TOBYINK" => 0.023 } },
                         runtime   => {
                                        recommends => { "Test::LongString" => 0.15 },
                                        requires   => {
@@ -49,7 +47,7 @@ my $meta = {
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.011 },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.012 },
                       },
   "release_status" => "stable",
   "resources"      => {
@@ -63,7 +61,7 @@ my $meta = {
                                         },
                         x_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => 0.011,
+  "version"        => 0.012,
 };
 
 my %dynamic_config;
