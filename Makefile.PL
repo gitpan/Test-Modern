@@ -39,15 +39,16 @@ my $meta = {
                                        suggests   => { "Test::Pod" => 0, "Test::Pod::Coverage" => 0, "Test::Version" => 0 },
                                      },
                         test      => {
-                                       conflicts => {
-                                         "Local::I::Doubt::This::Exists::Either"          => 0,
-                                         "Local::This::Probably::Does::Not::Exist"        => 0,
-                                         "Moose::This::Should::Not::Be::A::Real::Package" => 0,
-                                       },
+                                       conflicts  => {
+                                                       "Local::I::Doubt::This::Exists::Either"          => 0,
+                                                       "Local::This::Probably::Does::Not::Exist"        => 0,
+                                                       "Moose::This::Should::Not::Be::A::Real::Package" => 0,
+                                                     },
+                                       recommends => { "LWP::UserAgent" => 0, "Moose" => 0, "namespace::clean" => 0 },
                                      },
                       },
   "provides"       => {
-                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.012 },
+                        "Test::Modern" => { file => "lib/Test/Modern.pm", version => 0.013 },
                       },
   "release_status" => "stable",
   "resources"      => {
@@ -61,7 +62,7 @@ my $meta = {
                                         },
                         x_identifier => "http://purl.org/NET/cpan-uri/dist/Test-Modern/project",
                       },
-  "version"        => 0.012,
+  "version"        => 0.013,
 };
 
 my %dynamic_config;

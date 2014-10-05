@@ -24,7 +24,7 @@ optional_features: {}
 provides:
   Test::Modern:
     file: lib/Test/Modern.pm
-    version: '0.012'
+    version: '0.013'
 recommends:
   Test::LongString: '0.15'
 requires:
@@ -44,4 +44,4 @@ resources:
   homepage: https://metacpan.org/release/Test-Modern
   license: http://dev.perl.org/licenses/
   repository: git://github.com/tobyink/p5-test-modern.git
-version: '0.012'
+version: '0.013'

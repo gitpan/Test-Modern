@@ -39,6 +39,7 @@
 	], [
 		doap-deps:on "Moose::This::Should::Not::Be::A::Real::Package"^^doap-deps:CpanId;
 	];
+	doap-deps:test-recommendation [ doap-deps:on "Moose"^^doap-deps:CpanId ], [ doap-deps:on "namespace::clean"^^doap-deps:CpanId ], [ doap-deps:on "LWP::UserAgent"^^doap-deps:CpanId ];
 	doap:bug-database    <http://rt.cpan.org/Dist/Display.html?Queue=Test-Modern>;
 	doap:created         "2014-03-07"^^xsd:date;
 	doap:developer       <http://purl.org/NET/cpan-uri/person/tobyink>;
@@ -48,7 +49,7 @@
 	doap:maintainer      <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:name            "Test-Modern";
 	doap:programming-language "Perl";
-	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_04>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_05>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_06>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_07>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_08>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_09>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-001>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-002>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-003>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-004>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-005>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-006>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-007>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-008>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-009>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-010>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-011>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-012>;
+	doap:release         <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_01>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_02>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_03>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_04>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_05>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_06>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_07>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_08>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-000_09>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-001>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-002>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-003>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-004>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-005>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-006>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-007>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-008>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-009>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-010>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-011>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-012>, <http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-013>;
 	doap:repository      [
 		a doap:GitRepository;
 		doap:browse <https://github.com/tobyink/p5-test-modern>;
@@ -405,6 +406,20 @@
 	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
 	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.012.tar.gz>;
 	doap:revision        "0.012"^^xsd:string.
+
+<http://purl.org/NET/cpan-uri/dist/Test-Modern/v_0-013>
+	a                    doap:Version;
+	dc:identifier        "Test-Modern-0.013"^^xsd:string;
+	dc:issued            "2014-10-05"^^xsd:date;
+	doap-changeset:changeset [
+		doap-changeset:item [
+			a doap-changeset:Packaging;
+			rdfs:label "Add 'test recommends' dependencies on a few modules.";
+		];
+	];
+	doap-changeset:released-by <http://purl.org/NET/cpan-uri/person/tobyink>;
+	doap:file-release    <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/Test-Modern-0.013.tar.gz>;
+	doap:revision        "0.013"^^xsd:string.
 
 <http://purl.org/NET/cpan-uri/person/tobyink>
 	a                    foaf:Person;
